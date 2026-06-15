@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sacir Est s.r.l. — Chimica per l'auto dal 1964</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A1311;
+    --petrol:#0F211F;
+    --petrol-2:#15302A;
+    --line-dark:#234039;
+    --bone:#F1EEE8;
+    --bone-2:#FBFAF6;
+    --white:#FFFFFF;
+    --line:#E2DDD2;
+    --text:#13201D;
+    --inv:#F0EDE5;
+    --muted:#5E6B66;
+    --muted-inv:#9FB2AA;
+    --brass:#C8922E;
+    --brass-2:#E7BD6A;
+    --brass-grad:linear-gradient(135deg,#EFC97A,#C8922E 70%);
+    --f-additive:#E0962B;
+    --f-coolant:#36B98A;
+    --f-screen:#3A82D6;
+    --f-brake:#C56F3A;
+    --f-engine:#7C9088;
+    --f-aerosol:#9885C6;
+    --f-care:#2BB1B8;
+    --maxw:1200px;
+    --shadow:0 24px 60px -28px rgba(10,19,17,.45);
+    --shadow-sm:0 10px 28px -16px rgba(10,19,17,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bone);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+  h1,h2,h3,.display{font-family:'Bricolage Grotesque',sans-serif;line-height:1.0;letter-spacing:-.015em}
+  .mono{font-family:'JetBrains Mono',monospace}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--brass-2);color:var(--ink)}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+
+  /* grain overlay for dark sections */
+  .grain{position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- NAV ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(10,19,17,.72);backdrop-filter:blur(14px) saturate(1.4);
+    border-bottom:1px solid rgba(255,255,255,.07);color:var(--inv)}
+  .nav-in{display:flex;align-items:center;gap:30px;height:74px}
+  .brand{display:flex;align-items:center;gap:12px;cursor:pointer;flex-shrink:0}
+  .brand-mark{width:38px;height:38px;border-radius:9px;flex-shrink:0;background:var(--brass-grad);
+    display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;color:#231603;font-size:19px;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.5),0 4px 12px -4px rgba(200,146,46,.6)}
+  .brand-name{font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;letter-spacing:.04em}
+  .brand-name span{background:var(--brass-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .brand-sub{font-size:9.5px;letter-spacing:.26em;color:var(--muted-inv);text-transform:uppercase;margin-top:2px}
+  .menu{display:flex;gap:3px;margin-left:auto;align-items:center}
+  .navlink{font-size:13px;font-weight:500;padding:9px 14px;border-radius:8px;color:var(--muted-inv);cursor:pointer;
+    transition:color .18s,background .18s;white-space:nowrap;background:none;border:none;font-family:inherit}
+  .navlink:hover{color:var(--inv);background:rgba(255,255,255,.06)}
+  .navlink.active{color:#231603;background:var(--brass-2)}
+  .lang{display:flex;border:1px solid var(--line-dark);border-radius:8px;overflow:hidden;margin-left:8px}
+  .lang button{background:none;border:none;color:var(--muted-inv);font-family:'JetBrains Mono';font-size:11px;font-weight:500;padding:7px 10px;cursor:pointer;transition:.15s}
+  .lang button.on{background:var(--inv);color:var(--ink)}
+  .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line-dark);color:var(--inv);width:44px;height:40px;border-radius:9px;cursor:pointer;font-size:18px}
+
+  .view{display:none}
+  .view.show{display:block}
+
+  .eyebrow{font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass);font-weight:500;display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--brass)}
+  .dark .eyebrow{color:var(--brass-2)}
+
+  /* ---------- HERO ---------- */
+  .hero{background:radial-gradient(120% 90% at 78% 18%,#1a3a33 0%,var(--petrol) 42%,var(--ink) 100%);
+    color:var(--inv);position:relative;overflow:hidden}
+  .hero .glow{position:absolute;width:620px;height:620px;right:-80px;top:-120px;border-radius:50%;
+    background:radial-gradient(circle,rgba(231,189,106,.18),transparent 62%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:70px 0 30px;position:relative;z-index:2}
+  .hero h1{font-size:clamp(44px,6.4vw,84px);font-weight:800;margin:24px 0 0;letter-spacing:-.025em}
+  .hero h1 em{font-style:normal;background:var(--brass-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-sub{color:#C7D6CF;font-size:18px;max-width:47ch;margin:26px 0 36px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{font-family:'Bricolage Grotesque';font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:11px;cursor:pointer;border:none;
+    transition:transform .16s,box-shadow .2s,background .2s;display:inline-flex;align-items:center;gap:9px}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-brass{background:var(--brass-grad);color:#231603;box-shadow:0 10px 26px -10px rgba(200,146,46,.7),inset 0 1px 1px rgba(255,255,255,.4)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--inv);border:1px solid var(--line-dark)}
+  .btn-ghost:hover{border-color:var(--brass-2);color:var(--brass-2)}
+  .btn-dark{background:var(--ink);color:var(--inv)}
+
+  /* product showcase */
+  .showcase{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:6px;min-height:400px}
+  .prod-svg{filter:drop-shadow(0 30px 30px rgba(0,0,0,.5));animation:floatUp 1s cubic-bezier(.2,.7,.2,1) backwards}
+  .prod-svg.a{width:150px;z-index:2;animation-delay:.05s}
+  .prod-svg.b{width:185px;z-index:3;margin:0 -8px;animation-delay:.16s}
+  .prod-svg.c{width:138px;z-index:2;animation-delay:.27s}
+  @keyframes floatUp{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+  .seal{position:absolute;right:6px;top:8px;width:104px;height:104px;z-index:4;animation:spin 38s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .trustbar{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:14px 40px;padding:22px 0 0;
+    border-top:1px solid rgba(255,255,255,.08);margin-top:18px}
+  .trust{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted-inv)}
+  .trust b{font-family:'Bricolage Grotesque';color:var(--inv);font-size:15px;font-weight:700}
+  .trust .dotb{width:7px;height:7px;border-radius:50%;background:var(--brass-2)}
+
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,.08);margin-top:46px;position:relative;z-index:2}
+  .stat{padding:30px 0 40px;border-right:1px solid rgba(255,255,255,.08)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:42px}
+  .stat .n em{font-style:normal;background:var(--brass-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stat .l{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-inv);margin-top:6px}
+
+  /* ---------- SECTIONS ---------- */
+  .section{padding:96px 0;position:relative}
+  .section.alt{background:var(--bone-2)}
+  .section.dark{background:var(--petrol);color:var(--inv);overflow:hidden}
+  .sec-head{max-width:62ch;margin-bottom:50px}
+  .sec-head h2{font-size:clamp(32px,4.4vw,52px);font-weight:800;margin:18px 0 16px}
+  .sec-head p{color:var(--muted);font-size:18px}
+  .dark .sec-head p{color:#B9C9C2}
+
+  .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+  .about-grid p{color:var(--muted);font-size:16.5px;margin-bottom:16px}
+  .pillars{display:grid;gap:14px}
+  .pillar{display:flex;gap:18px;padding:24px;background:var(--white);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+  .pillar:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .pillar .num{font-family:'JetBrains Mono';font-weight:700;font-size:14px;padding-top:3px;
+    background:var(--brass-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .pillar h4{font-family:'Bricolage Grotesque';font-size:17px;font-weight:700;margin-bottom:5px}
+  .pillar p{font-size:14px;color:var(--muted);margin:0}
+
+  /* sector tabs + categories */
+  .sector-tabs{display:flex;gap:10px;margin-bottom:42px;flex-wrap:wrap}
+  .sector-tab{font-family:'Bricolage Grotesque';font-weight:700;font-size:14px;padding:12px 22px;border-radius:11px;
+    border:1px solid var(--line);background:var(--white);cursor:pointer;color:var(--muted);transition:.18s}
+  .sector-tab.on{background:var(--ink);color:var(--inv);border-color:var(--ink)}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(264px,1fr));gap:18px}
+  .cat{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:26px;cursor:pointer;position:relative;
+    overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s;box-shadow:var(--shadow-sm)}
+  .cat::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 100% 0,color-mix(in srgb,var(--c) 12%,transparent),transparent 60%);pointer-events:none}
+  .cat:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+  .cat .picon{width:62px;height:84px;margin-bottom:18px;position:relative;z-index:1}
+  .cat h4{font-family:'Bricolage Grotesque';font-size:18px;font-weight:700;margin-bottom:7px;position:relative;z-index:1}
+  .cat p{font-size:13.5px;color:var(--muted);margin-bottom:16px;min-height:38px;position:relative;z-index:1}
+  .cat .go{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;
+    color:var(--c);position:relative;z-index:1}
+
+  .products-out{margin-top:34px}
+  .prod-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+  .prod-head h3{font-family:'Bricolage Grotesque';font-size:24px;font-weight:800}
+  .prod-table{background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .prow{display:grid;grid-template-columns:90px 1fr 120px 160px;gap:14px;align-items:center;padding:17px 24px;border-bottom:1px solid var(--line)}
+  .prow:last-child{border-bottom:none}
+  .prow.h{background:var(--bone);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .prow .code{font-family:'JetBrains Mono';font-size:13px;font-weight:700;color:var(--brass)}
+  .prow .pname{font-weight:600;font-size:15px}
+  .prow .pack{font-family:'JetBrains Mono';font-size:13px;color:var(--muted)}
+  .docs{display:flex;gap:7px}
+  .doc{font-family:'JetBrains Mono';font-size:10px;font-weight:700;letter-spacing:.06em;padding:6px 10px;border-radius:7px;
+    border:1px solid var(--line);cursor:pointer;transition:.15s;color:var(--muted)}
+  .doc:hover{border-color:var(--brass);color:var(--brass);background:#fff8ec}
+
+  /* brands */
+  .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .brandcard{background:var(--petrol-2);border:1px solid var(--line-dark);border-radius:20px;padding:38px;text-align:center;
+    transition:transform .2s,border-color .2s}
+  .brandcard:hover{transform:translateY(-4px);border-color:var(--brass)}
+  .brandcard .logo{font-family:'Bricolage Grotesque';font-weight:800;font-size:30px;letter-spacing:-.02em;margin-bottom:16px}
+  .brandcard p{font-size:14px;color:#B9C9C2}
+
+  /* distribution */
+  .dist-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .map-card{background:linear-gradient(160deg,var(--petrol-2),var(--ink));border:1px solid var(--line-dark);border-radius:22px;padding:38px;color:var(--inv);position:relative;overflow:hidden}
+  .map-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+  .map-stats .n{font-family:'Bricolage Grotesque';font-weight:800;font-size:38px;background:var(--brass-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .map-stats .l{font-size:13px;color:var(--muted-inv)}
+  .reg-list{display:grid;gap:2px;margin-top:26px}
+  .reg{display:flex;justify-content:space-between;font-size:13px;padding:13px 0;border-bottom:1px solid var(--line-dark);font-family:'JetBrains Mono'}
+  .reg span:last-child{color:var(--brass-2)}
+
+  .cat-dl{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .dl-card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:34px;display:flex;flex-direction:column;gap:15px;box-shadow:var(--shadow-sm)}
+  .dl-card .ic{width:50px;height:50px;border-radius:13px;background:var(--ink);color:var(--brass-2);display:grid;place-items:center;font-family:'JetBrains Mono';font-weight:700;font-size:13px}
+  .dl-card h4{font-family:'Bricolage Grotesque';font-size:20px;font-weight:700}
+  .dl-card p{font-size:14px;color:var(--muted);flex:1}
+
+  /* forms */
+  .form-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+  .field{margin-bottom:17px}
+  .field label{display:block;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .field input,.field textarea{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:11px;font-family:inherit;font-size:15px;background:var(--white);color:var(--text);transition:border-color .15s,box-shadow .15s}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px rgba(200,146,46,.13)}
+  .field textarea{resize:vertical;min-height:120px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-note{font-size:12px;color:var(--muted);margin-top:12px}
+  .ok-msg{display:none;background:rgba(54,185,138,.1);border:1px solid var(--f-coolant);color:#1d6b4f;padding:15px 17px;border-radius:11px;font-size:14px;margin-top:16px}
+  .ok-msg.show{display:block}
+  .info-card{background:linear-gradient(160deg,var(--petrol-2),var(--ink));color:var(--inv);border-radius:20px;padding:36px;position:relative;overflow:hidden}
+  .info-row{padding:17px 0;border-bottom:1px solid var(--line-dark);position:relative;z-index:1}
+  .info-row:last-child{border-bottom:none}
+  .info-row .k{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-inv);margin-bottom:5px}
+  .info-row .v{font-size:15px}
+  .info-row .v a{color:var(--brass-2)}
+
+  /* footer */
+  .footer{background:var(--ink);color:var(--muted-inv);padding:64px 0 32px;position:relative;overflow:hidden}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;padding-bottom:40px;border-bottom:1px solid var(--line-dark);position:relative;z-index:1}
+  .footer .brand-name{color:var(--inv)}
+  .foot-col h5{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--inv);margin-bottom:18px}
+  .foot-col a{display:block;font-size:14px;padding:6px 0;cursor:pointer;transition:color .15s}
+  .foot-col a:hover{color:var(--brass-2)}
+  .foot-bot{display:flex;justify-content:space-between;padding-top:26px;font-size:12px;flex-wrap:wrap;gap:10px;font-family:'JetBrains Mono';position:relative;z-index:1}
+
+  .cookie{position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:rgba(10,19,17,.96);color:var(--inv);
+    border:1px solid var(--line-dark);border-radius:16px;padding:20px 22px;z-index:60;display:flex;gap:16px;align-items:center;backdrop-filter:blur(8px);box-shadow:0 24px 60px -20px rgba(0,0,0,.7)}
+  .cookie p{font-size:13px;color:var(--muted-inv);flex:1}
+  .cookie.hide{display:none}
+
+  @media(max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:30px;padding-top:48px}
+    .showcase{min-height:330px}
+    .about-grid,.dist-grid,.form-grid,.cat-dl{grid-template-columns:1fr;gap:36px}
+    .brand-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:680px){
+    .menu{display:none;position:absolute;top:74px;left:0;right:0;background:var(--ink);flex-direction:column;padding:16px;border-bottom:1px solid var(--line-dark);gap:4px;align-items:stretch}
+    .menu.open{display:flex}.navlink{text-align:left;padding:13px 15px}.lang{margin:6px 0 0}.burger{display:block}
+    .stats{grid-template-columns:1fr 1fr}
+    .prow{grid-template-columns:72px 1fr;gap:8px}.prow .pack,.docs{grid-column:1/-1}.prow.h{display:none}
+    .form-row{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.wrap{padding:0 22px}
+    .seal{width:80px;height:80px}
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG defs: products -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="glassHi" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+    <stop offset=".4" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".18"/>
+  </linearGradient>
+  <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3a4a45"/><stop offset="1" stop-color="#172622"/>
+  </linearGradient>
+</defs></svg>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <div class="brand" data-go="home">
+      <div class="brand-mark">S</div>
+      <div><div class="brand-name">SACIR<span>EST</span></div><div class="brand-sub">dal 1964</div></div>
+    </div>
+    <nav class="menu" id="menu">
+      <button class="navlink active" data-go="home" data-i18n="nav_home">Home</button>
+      <button class="navlink" data-go="products" data-i18n="nav_products">Prodotti</button>
+      <button class="navlink" data-go="brands" data-i18n="nav_brands">Brand</button>
+      <button class="navlink" data-go="distribution" data-i18n="nav_dist">Distribuzione</button>
+      <button class="navlink" data-go="catalog" data-i18n="nav_catalog">Catalogo</button>
+      <button class="navlink" data-go="orders" data-i18n="nav_orders">Ordini</button>
+      <button class="navlink" data-go="contacts" data-i18n="nav_contacts">Contatti</button>
+      <div class="lang"><button data-lang="it" class="on">IT</button><button data-lang="en">EN</button></div>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<section class="view show" data-view="home">
+  <div class="hero">
+    <div class="grain"></div>
+    <div class="glow"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow" data-i18n="hero_eyebrow">Chimica per l'automotive · dal 1964</span>
+          <h1 data-i18n="hero_h1">La chimica che tiene il <em>motore in movimento.</em></h1>
+          <p class="hero-sub" data-i18n="hero_sub">Additivi, fluidi e aerosol professionali prodotti a Rosate dal 1964. Una linea completa per auto e ferramenta, distribuita in 18 paesi.</p>
+          <div class="cta-row">
+            <button class="btn btn-brass" data-go="products" data-i18n="hero_cta1">Esplora i prodotti →</button>
+            <button class="btn btn-ghost" data-go="distribution" data-i18n="hero_cta2">Diventa distributore</button>
+          </div>
+        </div>
+        <div class="showcase" aria-hidden="true">
+          <!-- seal -->
+          <svg class="seal" viewBox="0 0 100 100"><defs><path id="circ" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#E7BD6A" stroke-width="1"/>
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#E7BD6A" stroke-width="1" stroke-opacity=".5"/>
+            <text font-family="JetBrains Mono" font-size="8.3" letter-spacing="3" fill="#E7BD6A"><textPath href="#circ" startOffset="2%">SACIR EST · MADE IN ITALY · </textPath></text>
+            <text x="50" y="46" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="17" fill="#E7BD6A">EST.</text>
+            <text x="50" y="63" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="15" fill="#E7BD6A">1964</text>
+          </svg>
+          <!-- bottle (additive) -->
+          <svg class="prod-svg a" viewBox="0 0 120 264">
+            <ellipse cx="60" cy="256" rx="44" ry="8" fill="#000" opacity=".3"/>
+            <rect x="46" y="6" width="28" height="26" rx="4" fill="url(#cap)"/>
+            <rect x="50" y="30" width="20" height="12" fill="#22332e"/>
+            <path d="M30 60 Q30 42 50 42 H70 Q90 42 90 60 V236 Q90 250 76 250 H44 Q30 250 30 236 Z" fill="#E0962B"/>
+            <path d="M30 60 Q30 42 50 42 H70 Q90 42 90 60 V236 Q90 250 76 250 H44 Q30 250 30 236 Z" fill="url(#glassHi)"/>
+            <rect x="34" y="120" width="52" height="92" rx="7" fill="#fbfaf6" opacity=".95"/>
+            <rect x="34" y="120" width="52" height="13" rx="7" fill="#0F211F"/>
+            <rect x="34" y="127" width="52" height="6" fill="#0F211F"/>
+            <text x="60" y="129" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="7" fill="#E7BD6A">SACIR EST</text>
+            <rect x="42" y="142" width="36" height="3.5" rx="1.5" fill="#E0962B"/>
+            <text x="60" y="166" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="700" font-size="9" fill="#13201D">ADDITIVO</text>
+            <text x="60" y="184" text-anchor="middle" font-family="JetBrains Mono" font-size="5.5" fill="#5E6B66">DIESEL · 250ml</text>
+            <rect x="46" y="194" width="28" height="10" rx="2" fill="#0F211F" opacity=".08"/>
+          </svg>
+          <!-- canister (antifreeze) -->
+          <svg class="prod-svg b" viewBox="0 0 150 280">
+            <ellipse cx="75" cy="272" rx="56" ry="9" fill="#000" opacity=".32"/>
+            <rect x="78" y="4" width="30" height="22" rx="3" fill="url(#cap)"/>
+            <path d="M30 70 Q30 40 78 40 V62 H92 Q120 62 120 88 V250 Q120 266 104 266 H46 Q30 266 30 250 Z" fill="#36B98A"/>
+            <path d="M30 70 Q30 40 78 40 V62 H92 Q120 62 120 88 V250 Q120 266 104 266 H46 Q30 266 30 250 Z" fill="url(#glassHi)"/>
+            <path d="M42 78 Q42 58 70 56 V70 Q48 72 48 88 Z" fill="#fff" opacity=".22"/>
+            <rect x="40" y="128" width="70" height="104" rx="8" fill="#fbfaf6" opacity=".96"/>
+            <rect x="40" y="128" width="70" height="15" rx="8" fill="#0F211F"/>
+            <rect x="40" y="136" width="70" height="7" fill="#0F211F"/>
+            <text x="75" y="138" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="9" fill="#E7BD6A">SACIR EST</text>
+            <rect x="50" y="154" width="50" height="4" rx="2" fill="#36B98A"/>
+            <text x="75" y="182" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="700" font-size="12" fill="#13201D">ANTIGELO</text>
+            <text x="75" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="6.5" fill="#5E6B66">-40°C · 1L</text>
+            <rect x="58" y="210" width="34" height="14" rx="3" fill="#36B98A" opacity=".15"/>
+          </svg>
+          <!-- aerosol -->
+          <svg class="prod-svg c" viewBox="0 0 110 268">
+            <ellipse cx="55" cy="260" rx="38" ry="7" fill="#000" opacity=".3"/>
+            <rect x="44" y="6" width="22" height="14" rx="3" fill="#9aa5a0"/>
+            <rect x="49" y="2" width="8" height="8" rx="2" fill="#22332e"/>
+            <rect x="34" y="22" width="42" height="20" rx="4" fill="#2a3a35"/>
+            <path d="M30 46 H80 V244 Q80 252 72 252 H38 Q30 252 30 244 Z" fill="#7C9088"/>
+            <path d="M30 46 H80 V244 Q80 252 72 252 H38 Q30 252 30 244 Z" fill="url(#glassHi)"/>
+            <rect x="30" y="92" width="50" height="108" fill="#fbfaf6" opacity=".96"/>
+            <rect x="30" y="92" width="50" height="13" fill="#0F211F"/>
+            <text x="55" y="101" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="7" fill="#E7BD6A">SACIR EST</text>
+            <rect x="38" y="114" width="34" height="3.5" rx="1.5" fill="#9885C6"/>
+            <text x="55" y="140" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="700" font-size="9" fill="#13201D">SPRAY</text>
+            <text x="55" y="156" text-anchor="middle" font-family="JetBrains Mono" font-size="5.5" fill="#5E6B66">TECNICO·400ml</text>
+            <rect x="40" y="166" width="30" height="9" rx="2" fill="#9885C6" opacity=".14"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="trustbar">
+        <div class="trust"><span class="dotb"></span><span data-i18n="t_made">Produzione propria</span> · <b>Rosate (MI)</b></div>
+        <div class="trust"><span class="dotb"></span><span data-i18n="t_heritage">Esperienza dal</span> <b>1964</b></div>
+        <div class="trust"><span class="dotb"></span><span data-i18n="t_export">Export in</span> <b>18 paesi</b></div>
+        <div class="trust"><span class="dotb"></span><b>Holts · Prestone · Velox Glass</b></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="n">1964</div><div class="l" data-i18n="stat1">Anno di fondazione</div></div>
+        <div class="stat"><div class="n"><em>18</em></div><div class="l" data-i18n="stat2">Paesi serviti</div></div>
+        <div class="stat"><div class="n">60+</div><div class="l" data-i18n="stat3">Anni di esperienza</div></div>
+        <div class="stat"><div class="n">2</div><div class="l" data-i18n="stat4">Settori produttivi</div></div>
+        <div class="stat"><div class="n">3</div><div class="l" data-i18n="stat5">Brand distribuiti</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="about_eyebrow">Chi siamo</span>
+        <h2 style="font-size:42px;font-weight:800;margin:18px 0 20px" data-i18n="about_h2">Un'azienda in costante movimento.</h2>
+        <p data-i18n="about_p1">Dal 1964 SACIR EST, con sede a Rosate (Milano), è tra le realtà leader in Italia ed Europa nella chimica per l'auto e per il settore ferramenta.</p>
+        <p data-i18n="about_p2">I nostri prodotti nascono da materie prime selezionate, tecnologie di produzione avanzate e un controllo qualità costante, nel rispetto delle normative su sicurezza e ambiente.</p>
+        <p data-i18n="about_p3">Una rete distributiva capillare e in continua espansione ci ha portato in 18 paesi nel mondo, al servizio del professionista e del cliente privato.</p>
+      </div>
+      <div class="pillars reveal">
+        <div class="pillar"><div class="num">01</div><div><h4 data-i18n="pil1_t">Innovazione</h4><p data-i18n="pil1_p">Ricerca di laboratorio continua per prodotti sempre più efficienti.</p></div></div>
+        <div class="pillar"><div class="num">02</div><div><h4 data-i18n="pil2_t">Affidabilità</h4><p data-i18n="pil2_p">Qualità garantita da oltre sessant'anni di esperienza sul campo.</p></div></div>
+        <div class="pillar"><div class="num">03</div><div><h4 data-i18n="pil3_t">Professionalità</h4><p data-i18n="pil3_p">Gestione vendite e supporto tecnico per ogni mercato.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="view" data-view="products">
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="prod_eyebrow">Catalogo prodotti</span>
+        <h2 data-i18n="prod_h2">Due settori, una linea completa.</h2>
+        <p data-i18n="prod_p">Ogni categoria è identificata dal colore del suo fluido. Seleziona una categoria per vedere i prodotti, le schede tecniche (TDS) e di sicurezza (SDS).</p>
+      </div>
+      <div class="sector-tabs reveal">
+        <button class="sector-tab on" data-sector="auto" data-i18n="sec_auto">Settore Auto</button>
+        <button class="sector-tab" data-sector="diy" data-i18n="sec_diy">Settore Ferramenta / Fai da te</button>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+      <div class="products-out" id="productsOut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BRANDS ============ -->
+<section class="view" data-view="brands">
+  <div class="section dark"><div class="grain"></div>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="brand_eyebrow">I nostri brand</span>
+        <h2 data-i18n="brand_h2">Marchi che distribuiamo.</h2>
+        <p data-i18n="brand_p">Accanto alla produzione SACIR EST, distribuiamo brand internazionali di riferimento nella cura dell'auto.</p>
+      </div>
+      <div class="brand-grid reveal">
+        <div class="brandcard"><div class="logo" style="color:#E0962B">HOLTS</div><p data-i18n="brand_holts">Riparazione e manutenzione auto: prodotti tecnici riconosciuti a livello mondiale.</p></div>
+        <div class="brandcard"><div class="logo" style="color:#3A82D6">VELOX GLASS</div><p data-i18n="brand_velox">Liquidi lavavetro per vaschetta, marchio storico della casa SACIR EST.</p></div>
+        <div class="brandcard"><div class="logo" style="color:#36B98A">PRESTONE</div><p data-i18n="brand_prestone">Antigelo e fluidi per il raffreddamento, standard di settore dal Nord America.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DISTRIBUTION ============ -->
+<section class="view" data-view="distribution">
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="dist_eyebrow">Distribuzione</span>
+        <h2 data-i18n="dist_h2">Una rete in 18 paesi.</h2>
+        <p data-i18n="dist_p">Dall'Italia all'Europa e oltre: collaboriamo con distributori, grossisti e rivenditori del settore automotive e ferramenta.</p>
+      </div>
+      <div class="dist-grid">
+        <div class="map-card reveal"><div class="grain"></div>
+          <span class="eyebrow" data-i18n="dist_reach">Copertura attuale</span>
+          <div class="map-stats">
+            <div><div class="n">18</div><div class="l" data-i18n="dist_s1">Paesi serviti</div></div>
+            <div><div class="n">60+</div><div class="l" data-i18n="dist_s2">Anni di export</div></div>
+          </div>
+          <div class="reg-list">
+            <div class="reg"><span>Italia</span><span>HQ · Rosate (MI)</span></div>
+            <div class="reg"><span data-i18n="reg_eu">Europa Occidentale</span><span>● ● ● ● ●</span></div>
+            <div class="reg"><span data-i18n="reg_ee">Europa Orientale</span><span>● ● ● ●</span></div>
+            <div class="reg"><span data-i18n="reg_med">Mediterraneo & MENA</span><span>● ● ●</span></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <h3 style="font-family:'Bricolage Grotesque';font-size:30px;font-weight:800;margin-bottom:16px" data-i18n="dist_become">Diventa distributore</h3>
+          <p style="color:var(--muted);margin-bottom:24px;font-size:16.5px" data-i18n="dist_becomep">Cerchi un partner affidabile per la chimica automotive nel tuo mercato? Raccontaci di te e il nostro export team ti contatterà.</p>
+          <button class="btn btn-dark" data-go="orders" data-i18n="dist_btn">Richiedi una partnership →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section class="view" data-view="catalog">
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="catl_eyebrow">Catalogo & documentazione</span>
+        <h2 data-i18n="catl_h2">Scarica il catalogo.</h2>
+        <p data-i18n="catl_p">Catalogo generale, schede tecniche e schede di sicurezza dei prodotti, sempre aggiornati.</p>
+      </div>
+      <div class="cat-dl reveal">
+        <div class="dl-card">
+          <div class="ic">PDF</div>
+          <h4 data-i18n="catl_c1t">Catalogo generale 2026</h4>
+          <p data-i18n="catl_c1p">L'intera gamma auto e ferramenta in un unico documento, con codici e formati.</p>
+          <button class="btn btn-brass" data-toast="download" data-i18n="catl_dl">↓ Scarica PDF</button>
+        </div>
+        <div class="dl-card">
+          <div class="ic">WEB</div>
+          <h4 data-i18n="catl_c2t">Catalogo online</h4>
+          <p data-i18n="catl_c2p">Sfoglia i prodotti per categoria con schede tecniche e di sicurezza scaricabili.</p>
+          <button class="btn btn-dark" data-go="products" data-i18n="catl_browse">Sfoglia online →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ORDERS ============ -->
+<section class="view" data-view="orders">
+  <div class="section alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="ord_eyebrow">Ordini & richieste B2B</span>
+        <h2 data-i18n="ord_h2">Richiedi un preventivo.</h2>
+        <p data-i18n="ord_p">Compila il modulo: il nostro ufficio commerciale ti risponderà con disponibilità e condizioni.</p>
+      </div>
+      <div class="form-grid">
+        <form id="orderForm" class="reveal">
+          <div class="form-row">
+            <div class="field"><label data-i18n="f_company">Azienda</label><input required name="company"></div>
+            <div class="field"><label data-i18n="f_vat">Partita IVA</label><input name="vat"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label data-i18n="f_name">Referente</label><input required name="name"></div>
+            <div class="field"><label data-i18n="f_email">Email</label><input required type="email" name="email"></div>
+          </div>
+          <div class="field"><label data-i18n="f_msg">Prodotti e quantità richieste</label><textarea name="msg" placeholder="Es. Additivo diesel, antigelo concentrato..."></textarea></div>
+          <button class="btn btn-brass" type="submit" data-i18n="f_send">Invia richiesta →</button>
+          <div class="ok-msg" id="orderOk" data-i18n="f_ok">✓ Richiesta inviata (demo). In produzione questo modulo invierà l'email a info@sacirest.com.</div>
+          <p class="form-note" data-i18n="f_note">Inviando accetti il trattamento dei dati secondo la privacy policy.</p>
+        </form>
+        <div class="info-card reveal"><div class="grain"></div>
+          <span class="eyebrow" data-i18n="ord_direct">Contatto diretto</span>
+          <div class="info-row" style="margin-top:14px"><div class="k" data-i18n="ord_phone">Telefono</div><div class="v">+39 02 908.48.291</div></div>
+          <div class="info-row"><div class="k">Email</div><div class="v"><a href="mailto:info@sacirest.com">info@sacirest.com</a></div></div>
+          <div class="info-row"><div class="k" data-i18n="ord_hours">Orari ufficio</div><div class="v" data-i18n="ord_hoursv">Lun–Ven · 8:30–17:30 CET</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTS ============ -->
+<section class="view" data-view="contacts">
+  <div class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow" data-i18n="con_eyebrow">Contatti</span>
+        <h2 data-i18n="con_h2">Parliamo.</h2>
+        <p data-i18n="con_p">SACIR EST s.r.l. — sede produttiva e uffici a Rosate, alle porte di Milano.</p>
+      </div>
+      <div class="form-grid">
+        <form id="contactForm" class="reveal">
+          <div class="field"><label data-i18n="f_name">Nome e cognome</label><input required name="name"></div>
+          <div class="field"><label data-i18n="f_email">Email</label><input required type="email" name="email"></div>
+          <div class="field"><label data-i18n="c_msg">Messaggio</label><textarea name="msg"></textarea></div>
+          <button class="btn btn-brass" type="submit" data-i18n="f_send2">Invia messaggio →</button>
+          <div class="ok-msg" id="contactOk" data-i18n="f_ok2">✓ Messaggio inviato (demo).</div>
+        </form>
+        <div class="info-card reveal"><div class="grain"></div>
+          <div class="info-row"><div class="k" data-i18n="c_addr">Sede</div><div class="v">via Malpaga, 9<br>20088 Rosate (MI), Italia</div></div>
+          <div class="info-row"><div class="k" data-i18n="ord_phone">Telefono</div><div class="v">+39 02 908.48.291</div></div>
+          <div class="info-row"><div class="k">Fax</div><div class="v">+39 02 908.48.120</div></div>
+          <div class="info-row"><div class="k">Email</div><div class="v"><a href="mailto:info@sacirest.com">info@sacirest.com</a></div></div>
+          <div class="info-row"><div class="k" data-i18n="c_vat">Partita IVA</div><div class="v mono">11557210157</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="grain"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" data-go="home" style="margin-bottom:16px">
+          <div class="brand-mark">S</div><div class="brand-name">SACIR<span>EST</span></div>
+        </div>
+        <p style="font-size:14px;max-width:36ch" data-i18n="foot_about">Chimica per l'auto e la ferramenta dal 1964. Made in Rosate, Italy.</p>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_nav">Navigazione</h5>
+        <a data-go="products" data-i18n="nav_products">Prodotti</a>
+        <a data-go="brands" data-i18n="nav_brands">Brand</a>
+        <a data-go="distribution" data-i18n="nav_dist">Distribuzione</a>
+        <a data-go="catalog" data-i18n="nav_catalog">Catalogo</a>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="foot_contact">Contatti</h5>
+        <a href="mailto:info@sacirest.com">info@sacirest.com</a>
+        <a>+39 02 908.48.291</a>
+        <a data-i18n="foot_loc">Rosate (MI), Italia</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 1964–2026 SACIR EST s.r.l. · P.I. 11557210157</span>
+      <span data-i18n="foot_made">Prototipo · demo</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" id="cookie">
+  <p data-i18n="cookie_t">Usiamo cookie tecnici e analitici per migliorare la navigazione.</p>
+  <button class="btn btn-brass" id="cookieOk" style="padding:11px 20px" data-i18n="cookie_ok">Accetta</button>
+</div>
+
+<script>
+const CATS={
+  auto:[
+    {key:'add',c:'--f-additive',t:{it:'Additivi',en:'Additives'},d:{it:'Benzina, diesel e olio lubrificante.',en:'Petrol, diesel and lubricating oil.'}},
+    {key:'anti',c:'--f-coolant',t:{it:'Fluidi anticongelanti',en:'Antifreeze fluids'},d:{it:'Liquidi anticongelanti per radiatori.',en:'Coolant fluids for radiators.'}},
+    {key:'glass',c:'--f-screen',t:{it:'Velox Glass · Lavavetri',en:'Velox Glass · Screenwash'},d:{it:'Liquidi lavavetro per vaschetta.',en:'Windscreen washer fluids.'}},
+    {key:'brake',c:'--f-brake',t:{it:'Fluidi freno · Idroguida',en:'Brake · Power steering'},d:{it:'Fluidi freno e servosterzo.',en:'Brake and steering fluids.'}},
+    {key:'eng',c:'--f-engine',t:{it:'Prodotti tecnici motore',en:'Engine technical products'},d:{it:'Trattamenti e tecnici per motore.',en:'Engine treatments & technicals.'}},
+    {key:'aer',c:'--f-aerosol',t:{it:'Aerosol',en:'Aerosol'},d:{it:'Spray tecnici multifunzione.',en:'Multi-purpose technical sprays.'}},
+    {key:'care',c:'--f-care',t:{it:"Cura dell'auto",en:'Car care'},d:{it:'Fai da te e professionale.',en:'DIY and professional.'}},
+  ],
+  diy:[
+    {key:'spray',c:'--f-engine',t:{it:'Spray tecnici',en:'Technical sprays'},d:{it:'Multifunzione per la ferramenta.',en:'Multi-purpose for hardware.'}},
+    {key:'seal',c:'--f-additive',t:{it:'Prodotti e sigillanti',en:'Products & sealants'},d:{it:'Adesivi rapidi e sigillanti.',en:'Fast adhesives and sealants.'}},
+    {key:'hyg',c:'--f-coolant',t:{it:'Igiene e pulizia',en:'Hygiene & cleaning'},d:{it:'Prodotti igienici e detergenti.',en:'Hygiene and cleaning products.'}},
+    {key:'auto2',c:'--f-care',t:{it:'Auto',en:'Auto'},d:{it:'Linea auto per il fai da te.',en:'Auto line for DIY.'}},
+  ]
+};
+const SAMPLE=[
+  {code:'AD-104',n:{it:'Additivo Diesel Multifunzione',en:'Multi-purpose Diesel Additive'},pack:'250 ml / 1 L'},
+  {code:'AD-210',n:{it:'Pulitore Iniettori Benzina',en:'Petrol Injector Cleaner'},pack:'300 ml'},
+  {code:'AD-330',n:{it:'Trattamento Olio Motore',en:'Engine Oil Treatment'},pack:'300 ml'},
+];
+// small bottle icon for category cards (recolored)
+function picon(c){return `<svg class="picon" viewBox="0 0 62 84"><rect x="23" y="2" width="16" height="11" rx="2" fill="#2a3a35"/><path d="M14 26 Q14 17 24 17 H38 Q48 17 48 26 V74 Q48 80 42 80 H20 Q14 80 14 74 Z" fill="var(${c})"/><path d="M14 26 Q14 17 24 17 H38 Q48 17 48 26 V74 Q48 80 42 80 H20 Q14 80 14 74 Z" fill="url(#glassHi)"/><rect x="17" y="44" width="28" height="30" rx="3" fill="#fbfaf6" opacity=".95"/><rect x="21" y="49" width="20" height="2.5" rx="1.2" fill="var(${c})"/><rect x="21" y="55" width="16" height="2" rx="1" fill="#9aa39f"/><rect x="21" y="60" width="20" height="2" rx="1" fill="#c9d0cc"/></svg>`}
+
+let lang='it',sector='auto';
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[k])el.innerHTML=T[k][lang];});
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
+  renderCats();
+  const out=document.getElementById('productsOut');if(out.dataset.open)renderProducts(out.dataset.open);
+}
+function go(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('show',v.dataset.view===view));
+  document.querySelectorAll('.navlink').forEach(n=>n.classList.toggle('active',n.dataset.go===view));
+  window.scrollTo({top:0,behavior:'auto'});
+  document.getElementById('menu').classList.remove('open');
+  revealScan();
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+function renderCats(){
+  const grid=document.getElementById('catGrid');grid.innerHTML='';
+  CATS[sector].forEach(cat=>{
+    const el=document.createElement('div');el.className='cat';el.style.setProperty('--c',`var(${cat.c})`);
+    el.innerHTML=`${picon(cat.c)}<h4>${cat.t[lang]}</h4><p>${cat.d[lang]}</p><div class="go">${lang==='it'?'Vedi prodotti →':'View products →'}</div>`;
+    el.addEventListener('click',()=>renderProducts(cat.key));grid.appendChild(el);
+  });
+}
+function renderProducts(key){
+  const cat=[...CATS.auto,...CATS.diy].find(c=>c.key===key);
+  const out=document.getElementById('productsOut');out.dataset.open=key;
+  const rows=SAMPLE.map(p=>`<div class="prow"><div class="code">${p.code}</div><div class="pname">${p.n[lang]}</div><div class="pack">${p.pack}</div><div class="docs"><span class="doc" data-toast="d">TDS ↓</span><span class="doc" data-toast="d">SDS ↓</span></div></div>`).join('');
+  out.innerHTML=`<div class="prod-head"><h3>${cat.t[lang]}</h3><span class="mono" style="font-size:12px;color:var(--muted)">${lang==='it'?'prodotti dimostrativi':'demo products'}</span></div>
+    <div class="prod-table"><div class="prow h"><div>${lang==='it'?'Codice':'Code'}</div><div>${lang==='it'?'Prodotto':'Product'}</div><div class="pack">${lang==='it'?'Formato':'Pack'}</div><div>${lang==='it'?'Schede':'Sheets'}</div></div>${rows}</div>`;
+  out.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>toast(lang==='it'?'Documento dimostrativo — i PDF reali saranno collegati in produzione.':'Demo document — real PDFs will be linked in production.')));
+  out.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.querySelectorAll('.sector-tab').forEach(t=>t.addEventListener('click',()=>{
+  sector=t.dataset.sector;document.querySelectorAll('.sector-tab').forEach(x=>x.classList.toggle('on',x===t));
+  const out=document.getElementById('productsOut');out.innerHTML='';out.dataset.open='';renderCats();
+}));
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{lang=b.dataset.lang;applyLang();}));
+function bindForm(id,okId){const f=document.getElementById(id);if(!f)return;f.addEventListener('submit',e=>{e.preventDefault();document.getElementById(okId).classList.add('show');f.reset();});}
+bindForm('orderForm','orderOk');bindForm('contactForm','contactOk');
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('menu').classList.toggle('open'));
+document.getElementById('cookieOk').addEventListener('click',()=>document.getElementById('cookie').classList.add('hide'));
+document.querySelectorAll('[data-toast="download"]').forEach(b=>b.addEventListener('click',()=>toast(lang==='it'?'Catalogo dimostrativo — il PDF reale sarà collegato in produzione.':'Demo catalogue — the real PDF will be linked in production.')));
+let toastEl;
+function toast(msg){if(toastEl)toastEl.remove();toastEl=document.createElement('div');toastEl.textContent=msg;
+  toastEl.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#0A1311;color:#F0EDE5;padding:14px 22px;border-radius:12px;font-size:14px;z-index:80;box-shadow:0 18px 44px -14px rgba(0,0,0,.7);border:1px solid #234039;max-width:90vw;text-align:center';
+  document.body.appendChild(toastEl);setTimeout(()=>{if(toastEl)toastEl.remove();},3600);}
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+function revealScan(){document.querySelectorAll('.view.show .reveal:not(.in)').forEach(el=>io.observe(el));}
+const T={
+  nav_home:{it:'Home',en:'Home'},nav_products:{it:'Prodotti',en:'Products'},nav_brands:{it:'Brand',en:'Brands'},nav_dist:{it:'Distribuzione',en:'Distribution'},nav_catalog:{it:'Catalogo',en:'Catalogue'},nav_orders:{it:'Ordini',en:'Orders'},nav_contacts:{it:'Contatti',en:'Contacts'},
+  hero_eyebrow:{it:"Chimica per l'automotive · dal 1964",en:'Automotive chemistry · since 1964'},
+  hero_h1:{it:'La chimica che tiene il <em>motore in movimento.</em>',en:'The chemistry that keeps <em>engines moving.</em>'},
+  hero_sub:{it:'Additivi, fluidi e aerosol professionali prodotti a Rosate dal 1964. Una linea completa per auto e ferramenta, distribuita in 18 paesi.',en:'Professional additives, fluids and aerosols made in Rosate since 1964. A complete line for automotive and hardware, distributed in 18 countries.'},
+  hero_cta1:{it:'Esplora i prodotti →',en:'Explore products →'},hero_cta2:{it:'Diventa distributore',en:'Become a distributor'},
+  t_made:{it:'Produzione propria',en:'In-house production'},t_heritage:{it:'Esperienza dal',en:'Expertise since'},t_export:{it:'Export in',en:'Export to'},
+  stat1:{it:'Anno di fondazione',en:'Founded'},stat2:{it:'Paesi serviti',en:'Countries served'},stat3:{it:'Anni di esperienza',en:'Years of expertise'},stat4:{it:'Settori produttivi',en:'Divisions'},stat5:{it:'Brand distribuiti',en:'Brands distributed'},
+  about_eyebrow:{it:'Chi siamo',en:'About us'},about_h2:{it:"Un'azienda in costante movimento.",en:'A company always in motion.'},
+  about_p1:{it:'Dal 1964 SACIR EST, con sede a Rosate (Milano), è tra le realtà leader in Italia ed Europa nella chimica per l\'auto e per il settore ferramenta.',en:'Since 1964 SACIR EST, based in Rosate (Milan), has been among the leaders in Italy and Europe in automotive and hardware chemistry.'},
+  about_p2:{it:'I nostri prodotti nascono da materie prime selezionate, tecnologie di produzione avanzate e un controllo qualità costante, nel rispetto delle normative su sicurezza e ambiente.',en:'Our products are built on selected raw materials, advanced production technology and constant quality control, in full compliance with safety and environmental standards.'},
+  about_p3:{it:'Una rete distributiva capillare e in continua espansione ci ha portato in 18 paesi nel mondo, al servizio del professionista e del cliente privato.',en:'A widespread, ever-growing distribution network has brought us to 18 countries worldwide, serving both professionals and private customers.'},
+  pil1_t:{it:'Innovazione',en:'Innovation'},pil1_p:{it:'Ricerca di laboratorio continua per prodotti sempre più efficienti.',en:'Continuous lab research for ever more efficient products.'},
+  pil2_t:{it:'Affidabilità',en:'Reliability'},pil2_p:{it:'Qualità garantita da oltre sessant\'anni di esperienza sul campo.',en:'Quality backed by over sixty years of field experience.'},
+  pil3_t:{it:'Professionalità',en:'Professionalism'},pil3_p:{it:'Gestione vendite e supporto tecnico per ogni mercato.',en:'Sales management and technical support for every market.'},
+  prod_eyebrow:{it:'Catalogo prodotti',en:'Product catalogue'},prod_h2:{it:'Due settori, una linea completa.',en:'Two divisions, one complete line.'},
+  prod_p:{it:'Ogni categoria è identificata dal colore del suo fluido. Seleziona una categoria per vedere i prodotti, le schede tecniche (TDS) e di sicurezza (SDS).',en:'Each category is identified by its fluid colour. Select a category to see products, technical (TDS) and safety (SDS) data sheets.'},
+  sec_auto:{it:'Settore Auto',en:'Automotive'},sec_diy:{it:'Settore Ferramenta / Fai da te',en:'Hardware / DIY'},
+  brand_eyebrow:{it:'I nostri brand',en:'Our brands'},brand_h2:{it:'Marchi che distribuiamo.',en:'Brands we distribute.'},
+  brand_p:{it:'Accanto alla produzione SACIR EST, distribuiamo brand internazionali di riferimento nella cura dell\'auto.',en:'Alongside SACIR EST production, we distribute leading international car-care brands.'},
+  brand_holts:{it:'Riparazione e manutenzione auto: prodotti tecnici riconosciuti a livello mondiale.',en:'Car repair and maintenance: technical products recognised worldwide.'},
+  brand_velox:{it:'Liquidi lavavetro per vaschetta, marchio storico della casa SACIR EST.',en:'Windscreen washer fluids — a historic SACIR EST house brand.'},
+  brand_prestone:{it:'Antigelo e fluidi per il raffreddamento, standard di settore dal Nord America.',en:'Antifreeze and cooling fluids — an industry standard from North America.'},
+  dist_eyebrow:{it:'Distribuzione',en:'Distribution'},dist_h2:{it:'Una rete in 18 paesi.',en:'A network across 18 countries.'},
+  dist_p:{it:'Dall\'Italia all\'Europa e oltre: collaboriamo con distributori, grossisti e rivenditori del settore automotive e ferramenta.',en:'From Italy across Europe and beyond: we partner with distributors, wholesalers and retailers in the automotive and hardware sectors.'},
+  dist_reach:{it:'Copertura attuale',en:'Current reach'},dist_s1:{it:'Paesi serviti',en:'Countries served'},dist_s2:{it:'Anni di export',en:'Years of export'},
+  reg_eu:{it:'Europa Occidentale',en:'Western Europe'},reg_ee:{it:'Europa Orientale',en:'Eastern Europe'},reg_med:{it:'Mediterraneo & MENA',en:'Mediterranean & MENA'},
+  dist_become:{it:'Diventa distributore',en:'Become a distributor'},
+  dist_becomep:{it:'Cerchi un partner affidabile per la chimica automotive nel tuo mercato? Raccontaci di te e il nostro export team ti contatterà.',en:'Looking for a reliable automotive-chemistry partner in your market? Tell us about you and our export team will get in touch.'},
+  dist_btn:{it:'Richiedi una partnership →',en:'Request a partnership →'},
+  catl_eyebrow:{it:'Catalogo & documentazione',en:'Catalogue & documents'},catl_h2:{it:'Scarica il catalogo.',en:'Download the catalogue.'},
+  catl_p:{it:'Catalogo generale, schede tecniche e schede di sicurezza dei prodotti, sempre aggiornati.',en:'General catalogue, technical and safety data sheets — always up to date.'},
+  catl_c1t:{it:'Catalogo generale 2026',en:'General catalogue 2026'},catl_c1p:{it:'L\'intera gamma auto e ferramenta in un unico documento, con codici e formati.',en:'The full automotive and hardware range in one document, with codes and pack sizes.'},
+  catl_dl:{it:'↓ Scarica PDF',en:'↓ Download PDF'},catl_c2t:{it:'Catalogo online',en:'Online catalogue'},
+  catl_c2p:{it:'Sfoglia i prodotti per categoria con schede tecniche e di sicurezza scaricabili.',en:'Browse products by category with downloadable technical and safety sheets.'},
+  catl_browse:{it:'Sfoglia online →',en:'Browse online →'},
+  ord_eyebrow:{it:'Ordini & richieste B2B',en:'Orders & B2B enquiries'},ord_h2:{it:'Richiedi un preventivo.',en:'Request a quote.'},
+  ord_p:{it:'Compila il modulo: il nostro ufficio commerciale ti risponderà con disponibilità e condizioni.',en:'Fill in the form and our sales office will reply with availability and terms.'},
+  f_company:{it:'Azienda',en:'Company'},f_vat:{it:'Partita IVA',en:'VAT number'},f_name:{it:'Referente',en:'Contact name'},f_email:{it:'Email',en:'Email'},
+  f_msg:{it:'Prodotti e quantità richieste',en:'Products and quantities'},f_send:{it:'Invia richiesta →',en:'Send request →'},
+  f_ok:{it:'✓ Richiesta inviata (demo). In produzione questo modulo invierà l\'email a info@sacirest.com.',en:'✓ Request sent (demo). In production this form will email info@sacirest.com.'},
+  f_note:{it:'Inviando accetti il trattamento dei dati secondo la privacy policy.',en:'By sending you accept data processing per the privacy policy.'},
+  ord_direct:{it:'Contatto diretto',en:'Direct contact'},ord_phone:{it:'Telefono',en:'Phone'},ord_hours:{it:'Orari ufficio',en:'Office hours'},ord_hoursv:{it:'Lun–Ven · 8:30–17:30 CET',en:'Mon–Fri · 8:30–17:30 CET'},
+  con_eyebrow:{it:'Contatti',en:'Contacts'},con_h2:{it:'Parliamo.',en:'Let\'s talk.'},
+  con_p:{it:'SACIR EST s.r.l. — sede produttiva e uffici a Rosate, alle porte di Milano.',en:'SACIR EST s.r.l. — production site and offices in Rosate, near Milan.'},
+  c_msg:{it:'Messaggio',en:'Message'},f_send2:{it:'Invia messaggio →',en:'Send message →'},f_ok2:{it:'✓ Messaggio inviato (demo).',en:'✓ Message sent (demo).'},
+  c_addr:{it:'Sede',en:'Address'},c_vat:{it:'Partita IVA',en:'VAT number'},
+  foot_about:{it:'Chimica per l\'auto e la ferramenta dal 1964. Made in Rosate, Italy.',en:'Automotive and hardware chemistry since 1964. Made in Rosate, Italy.'},
+  foot_nav:{it:'Navigazione',en:'Navigation'},foot_contact:{it:'Contatti',en:'Contacts'},foot_loc:{it:'Rosate (MI), Italia',en:'Rosate (MI), Italy'},foot_made:{it:'Prototipo · demo',en:'Prototype · demo'},
+  cookie_t:{it:'Usiamo cookie tecnici e analitici per migliorare la navigazione.',en:'We use technical and analytics cookies to improve your experience.'},cookie_ok:{it:'Accetta',en:'Accept'},
+};
+renderCats();applyLang();revealScan();
+</script>
+</body>
+</html>

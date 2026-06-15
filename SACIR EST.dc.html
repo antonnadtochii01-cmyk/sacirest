@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;background:#F5F6F7;color:#14161A;-webkit-font-smoothing:antialiased;line-height:1.55}
+  img{max-width:100%;display:block}
+  button{font-family:inherit}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#D81F2A;color:#fff}
+  @keyframes floatUp{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+  @keyframes spinSeal{to{transform:rotate(360deg)}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  [data-burger]{display:none}
+  @media(max-width:880px){
+    [data-menu]{display:none!important;position:absolute;top:72px;left:0;right:0;flex-direction:column!important;align-items:stretch!important;background:#0B0C0E;padding:14px;gap:4px!important;border-bottom:1px solid #2A2E34;box-shadow:0 24px 50px -18px rgba(0,0,0,.8)}
+    [data-menu][data-open="1"]{display:flex!important}
+    [data-burger]{display:flex!important}
+  }
+</style>
+</helmet>
+<div style="overflow-x:hidden">
+
+<!-- ============ NAV ============ -->
+<header style="position:sticky;top:0;z-index:50;background:rgba(11,12,14,.86);backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid rgba(255,255,255,.07);color:#EDEFF1">
+  <div style="max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:26px;height:72px">
+    <div onClick="{{ nav.home }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;flex-shrink:0">
+      <div style="width:42px;height:42px;border-radius:50%;background:#D81F2A;display:grid;place-items:center;flex-shrink:0;box-shadow:0 6px 16px -6px rgba(216,31,42,.8),inset 0 1px 0 rgba(255,255,255,.35)">
+        <span style="font-family:'Archivo',sans-serif;font-weight:900;color:#fff;font-size:15px;letter-spacing:-.03em">EST</span>
+      </div>
+      <div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;letter-spacing:.02em;line-height:1">SACIR <span style="color:#D81F2A">EST</span></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.28em;color:#8A9097;text-transform:uppercase;margin-top:3px">dal 1964 · Rosate</div>
+      </div>
+    </div>
+    <nav data-menu data-open="{{ menuOpenStr }}" style="display:flex;gap:2px;margin-left:auto;align-items:center">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <button onClick="{{ item.go }}" style="font-size:13px;font-weight:500;padding:9px 14px;border-radius:8px;cursor:pointer;border:none;white-space:nowrap;font-family:inherit;transition:background .16s,color .16s;background:{{ item.bg }};color:{{ item.fg }}" style-hover="color:#fff">{{ item.label }}</button>
+      </sc-for>
+      <div style="display:flex;border:1px solid #2A2E34;border-radius:8px;overflow:hidden;margin-left:10px">
+        <button onClick="{{ langIt }}" style="background:{{ itBg }};color:{{ itFg }};border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:7px 11px;cursor:pointer">IT</button>
+        <button onClick="{{ langEn }}" style="background:{{ enBg }};color:{{ enFg }};border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:7px 11px;cursor:pointer">EN</button>
+      </div>
+    </nav>
+    <button data-burger onClick="{{ toggleMenu }}" aria-label="Menu" style="margin-left:auto;align-items:center;justify-content:center;background:none;border:1px solid #2A2E34;color:#EDEFF1;width:44px;height:40px;border-radius:9px;cursor:pointer;font-size:18px">☰</button>
+  </div>
+</header>
+
+<main>
+<!-- ============ HOME ============ -->
+<sc-if value="{{ showHome }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Home" data-view="home">
+  <!-- HERO -->
+  <div style="background:radial-gradient(120% 95% at 82% 8%,#212530 0%,#15171C 44%,#0A0B0D 100%);color:#EDEFF1;position:relative;overflow:hidden">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:7px;background:#D81F2A"></div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:34px;align-items:center;padding:72px 0 26px;position:relative;z-index:2">
+        <div style="animation:riseIn .7s ease backwards">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF5560;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.heroEyebrow }}</div>
+          <h1 style="font-family:'Archivo',sans-serif;font-weight:900;letter-spacing:-.025em;line-height:1.0;font-size:clamp(42px,6vw,78px);margin:22px 0 0">{{ t.heroH1a }} <span style="color:#D81F2A">{{ t.heroH1b }}</span></h1>
+          <p style="color:#B9BFC6;font-size:18px;max-width:46ch;margin:24px 0 16px">{{ t.heroSub }}</p>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6E747B;margin-bottom:30px">— Your car is our passion</div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+            <button onClick="{{ nav.products }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;border:none;background:#D81F2A;color:#fff;box-shadow:0 12px 26px -10px rgba(216,31,42,.7);display:inline-flex;align-items:center;gap:8px;transition:transform .16s" style-hover="transform:translateY(-2px)">{{ t.heroCta1 }} →</button>
+            <button onClick="{{ nav.distribution }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.05);color:#EDEFF1;border:1px solid #2A2E34;transition:border-color .16s,color .16s" style-hover="border-color:#D81F2A;color:#fff">{{ t.heroCta2 }}</button>
+          </div>
+        </div>
+        <div style="position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:390px">
+          <div style="position:absolute;width:540px;height:540px;border-radius:50%;background:radial-gradient(circle,rgba(216,31,42,.26),transparent 62%);right:-30px;top:-40px;pointer-events:none"></div>
+          <svg viewBox="0 0 100 100" style="position:absolute;right:0;top:6px;width:104px;height:104px;z-index:5;animation:spinSeal 44s linear infinite">
+            <defs><path id="circ" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+            <circle cx="50" cy="50" r="47" fill="#0A0B0D"/>
+            <circle cx="50" cy="50" r="46.5" fill="none" stroke="#D81F2A" stroke-width="1.4"/>
+            <circle cx="50" cy="50" r="39" fill="none" stroke="#3A3E44" stroke-width="1"/>
+            <text font-family="IBM Plex Mono" font-size="7.6" letter-spacing="2.4" fill="#D7DADD"><textPath href="#circ" startOffset="1%">SACIR EST · MADE IN ITALY · </textPath></text>
+            <text x="50" y="47" text-anchor="middle" font-family="Archivo" font-weight="900" font-size="16" fill="#fff">EST.</text>
+            <text x="50" y="63" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="13" fill="#D81F2A">1964</text>
+          </svg>
+          <img src="assets/add-diesel-cleaner.png" alt="" style="height:248px;width:auto;position:relative;z-index:2;margin-right:-22px;filter:drop-shadow(0 26px 26px rgba(0,0,0,.55));animation:floatUp .9s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:.06s">
+          <img src="assets/aer-super-lube.png" alt="" style="height:340px;width:auto;position:relative;z-index:3;filter:drop-shadow(0 32px 30px rgba(0,0,0,.6));animation:floatUp .9s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:.18s">
+          <img src="assets/cool-permanent-pink.png" alt="" style="height:266px;width:auto;position:relative;z-index:2;margin-left:-22px;filter:drop-shadow(0 26px 26px rgba(0,0,0,.55));animation:floatUp .9s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:.3s">
+        </div>
+      </div>
+      <!-- trust bar -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px 38px;padding:22px 0;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
+        <div style="display:flex;align-items:center;gap:9px;font-size:13px;color:#9097A0"><span style="width:7px;height:7px;border-radius:50%;background:#D81F2A"></span>{{ t.trustMade }} · <b style="font-family:'Archivo',sans-serif;color:#EDEFF1;font-weight:700">Rosate (MI)</b></div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:13px;color:#9097A0"><span style="width:7px;height:7px;border-radius:50%;background:#D81F2A"></span>{{ t.trustSince }} <b style="font-family:'Archivo',sans-serif;color:#EDEFF1;font-weight:700">1964</b></div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:13px;color:#9097A0"><span style="width:7px;height:7px;border-radius:50%;background:#D81F2A"></span>{{ t.trustExport }} <b style="font-family:'Archivo',sans-serif;color:#EDEFF1;font-weight:700">18 {{ t.countriesWord }}</b></div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:13px;color:#9097A0"><span style="width:7px;height:7px;border-radius:50%;background:#D81F2A"></span><b style="font-family:'Archivo',sans-serif;color:#EDEFF1;font-weight:700">EST · Velox Glass · MARK</b></div>
+      </div>
+      <!-- stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
+        <div style="padding:30px 18px 42px 0;border-right:1px solid rgba(255,255,255,.08)"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:42px">1964</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A9097;margin-top:6px">{{ t.stat1 }}</div></div>
+        <div style="padding:30px 18px 42px;border-right:1px solid rgba(255,255,255,.08)"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:42px;color:#D81F2A">18</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A9097;margin-top:6px">{{ t.stat2 }}</div></div>
+        <div style="padding:30px 18px 42px;border-right:1px solid rgba(255,255,255,.08)"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:42px">60+</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A9097;margin-top:6px">{{ t.stat3 }}</div></div>
+        <div style="padding:30px 18px 42px;border-right:1px solid rgba(255,255,255,.08)"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:42px">7</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A9097;margin-top:6px">{{ t.stat4 }}</div></div>
+        <div style="padding:30px 0 42px 18px"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:42px">300+</div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A9097;margin-top:6px">{{ t.stat5 }}</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div style="padding:100px 0;background:#fff">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:58px;align-items:center">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.aboutEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 20px">{{ t.aboutH2 }}</h2>
+        <p style="color:#5C636B;font-size:16.5px;margin:0 0 15px">{{ t.aboutP1 }}</p>
+        <p style="color:#5C636B;font-size:16.5px;margin:0 0 15px">{{ t.aboutP2 }}</p>
+        <p style="color:#5C636B;font-size:16.5px;margin:0">{{ t.aboutP3 }}</p>
+      </div>
+      <div style="display:grid;gap:14px">
+        <div style="display:flex;gap:18px;padding:24px;background:#F5F6F7;border:1px solid #E4E6E9;border-radius:14px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;color:#D81F2A;padding-top:2px">01</div><div><h4 style="font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;margin:0 0 5px">{{ t.pil1t }}</h4><p style="font-size:14px;color:#5C636B;margin:0">{{ t.pil1p }}</p></div></div>
+        <div style="display:flex;gap:18px;padding:24px;background:#F5F6F7;border:1px solid #E4E6E9;border-radius:14px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;color:#D81F2A;padding-top:2px">02</div><div><h4 style="font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;margin:0 0 5px">{{ t.pil2t }}</h4><p style="font-size:14px;color:#5C636B;margin:0">{{ t.pil2p }}</p></div></div>
+        <div style="display:flex;gap:18px;padding:24px;background:#F5F6F7;border:1px solid #E4E6E9;border-radius:14px"><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;color:#D81F2A;padding-top:2px">03</div><div><h4 style="font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;margin:0 0 5px">{{ t.pil3t }}</h4><p style="font-size:14px;color:#5C636B;margin:0">{{ t.pil3p }}</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES PREVIEW -->
+  <div style="padding:100px 0;background:#F5F6F7">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:60ch;margin-bottom:42px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.homeCatEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(28px,3.6vw,42px);margin:18px 0 14px">{{ t.homeCatH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.homeCatP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px">
+        <sc-for list="{{ cats }}" as="cat" hint-placeholder-count="7">
+          <div onClick="{{ cat.open }}" style="background:#fff;border:1px solid #E4E6E9;border-top:3px solid {{ cat.accent }};border-radius:14px;padding:24px;cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 22px -16px rgba(10,15,20,.4)" style-hover="transform:translateY(-5px);box-shadow:0 22px 44px -22px rgba(10,15,20,.45)">
+            <div style="height:96px;display:flex;align-items:center;justify-content:flex-start;margin-bottom:14px"><img src="{{ cat.img }}" alt="" style="max-height:96px;width:auto;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))"></div>
+            <h4 style="font-family:'Archivo',sans-serif;font-size:17.5px;font-weight:700;margin:0 0 6px">{{ cat.name }}</h4>
+            <p style="font-size:13.5px;color:#5C636B;margin:0 0 16px;flex:1">{{ cat.desc }}</p>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;color:{{ cat.accent }}">{{ t.viewProducts }} →</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div style="padding:74px 0;background:#0A0B0D;color:#EDEFF1;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-60px;top:-60px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(216,31,42,.22),transparent 62%)"></div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px;display:flex;gap:28px;align-items:center;justify-content:space-between;flex-wrap:wrap;position:relative;z-index:2">
+      <div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;font-size:clamp(26px,3.2vw,38px);margin:0 0 8px">{{ t.ctaH }}</h2>
+        <p style="color:#9097A0;font-size:16px;margin:0;max-width:50ch">{{ t.ctaP }}</p>
+      </div>
+      <div style="display:flex;gap:13px;flex-wrap:wrap">
+        <button onClick="{{ nav.orders }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;border:none;background:#D81F2A;color:#fff;transition:transform .16s" style-hover="transform:translateY(-2px)">{{ t.ctaBtn1 }} →</button>
+        <button onClick="{{ nav.catalog }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.05);color:#EDEFF1;border:1px solid #2A2E34" style-hover="border-color:#D81F2A">{{ t.ctaBtn2 }}</button>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ PRODUCTS ============ -->
+<sc-if value="{{ showProducts }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Prodotti" data-view="products">
+  <div style="padding:90px 0 100px;background:#F5F6F7;min-height:70vh">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:62ch;margin-bottom:40px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.prodEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.prodH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.prodP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px">
+        <sc-for list="{{ cats }}" as="cat" hint-placeholder-count="7">
+          <div onClick="{{ cat.open }}" style="background:#fff;border:1px solid #E4E6E9;border-top:3px solid {{ cat.accent }};border-radius:14px;padding:24px;cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 22px -16px rgba(10,15,20,.4)" style-hover="transform:translateY(-5px);box-shadow:0 22px 44px -22px rgba(10,15,20,.45)">
+            <div style="height:96px;display:flex;align-items:center;justify-content:flex-start;margin-bottom:14px"><img src="{{ cat.img }}" alt="" style="max-height:96px;width:auto;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))"></div>
+            <h4 style="font-family:'Archivo',sans-serif;font-size:17.5px;font-weight:700;margin:0 0 6px">{{ cat.name }}</h4>
+            <p style="font-size:13.5px;color:#5C636B;margin:0 0 16px;flex:1">{{ cat.desc }}</p>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;font-weight:600;text-transform:uppercase;color:{{ cat.accent }}">{{ t.viewProducts }} →</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasOpenCat }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:40px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding-bottom:16px;border-bottom:2px solid {{ openCatAccent }}">
+          <h3 style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;margin:0">{{ openCatName }}</h3>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A9097">{{ t.demoNote }}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+          <sc-for list="{{ currentProducts }}" as="p" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #E4E6E9;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 22px -18px rgba(10,15,20,.4);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(10,15,20,.5)">
+              <div style="height:188px;background:linear-gradient(180deg,#FFFFFF,#EEF0F2);display:flex;align-items:center;justify-content:center;padding:18px"><img src="{{ p.img }}" alt="{{ p.name }}" style="max-height:160px;width:auto;filter:drop-shadow(0 14px 16px rgba(0,0,0,.22))"></div>
+              <div style="padding:16px 17px 17px;border-top:1px solid #E4E6E9;display:flex;flex-direction:column;flex:1">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#D81F2A;letter-spacing:.04em">{{ p.code }}</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;margin:5px 0 4px;line-height:1.2">{{ p.name }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A9097;margin-bottom:14px;flex:1">{{ p.pack }}</div>
+                <div style="display:flex;gap:7px">
+                  <span onClick="{{ docClick }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.04em;padding:6px 10px;border-radius:7px;border:1px solid #E4E6E9;cursor:pointer;color:#5C636B;transition:.15s" style-hover="border-color:#D81F2A;color:#D81F2A">TDS ↓</span>
+                  <span onClick="{{ docClick }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.04em;padding:6px 10px;border-radius:7px;border:1px solid #E4E6E9;cursor:pointer;color:#5C636B;transition:.15s" style-hover="border-color:#D81F2A;color:#D81F2A">SDS ↓</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ LINES / BRANDS ============ -->
+<sc-if value="{{ showBrands }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Linee" data-view="brands">
+  <div style="padding:90px 0 100px;background:#0A0B0D;color:#EDEFF1;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-80px;top:-40px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(216,31,42,.18),transparent 62%)"></div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px;position:relative;z-index:2">
+      <div style="max-width:62ch;margin-bottom:44px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF5560;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.linesEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.linesH2 }}</h2>
+        <p style="color:#9097A0;font-size:17px;margin:0">{{ t.linesP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
+        <sc-for list="{{ lines }}" as="ln" hint-placeholder-count="4">
+          <div style="background:#15171C;border:1px solid #2A2E34;border-radius:16px;padding:28px;display:flex;flex-direction:column;transition:transform .2s,border-color .2s" style-hover="transform:translateY(-4px);border-color:#D81F2A">
+            <div style="height:150px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.06),transparent 70%);border-radius:12px"><img src="{{ ln.img }}" alt="{{ ln.name }}" style="max-height:130px;width:auto;filter:drop-shadow(0 16px 18px rgba(0,0,0,.5))"></div>
+            <h4 style="font-family:'Archivo',sans-serif;font-size:21px;font-weight:800;margin:0 0 8px">{{ ln.name }}</h4>
+            <p style="font-size:14px;color:#9097A0;margin:0">{{ ln.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ DISTRIBUTION ============ -->
+<sc-if value="{{ showDist }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Distribuzione" data-view="distribution">
+  <div style="padding:90px 0 100px;background:#fff">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:62ch;margin-bottom:44px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.distEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.distH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.distP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px;align-items:center">
+        <div style="background:linear-gradient(160deg,#15171C,#0A0B0D);border:1px solid #2A2E34;border-radius:20px;padding:34px;color:#EDEFF1;position:relative;overflow:hidden">
+          <img src="assets/world-map.png" alt="" style="position:absolute;right:-30px;bottom:-10px;width:75%;opacity:.22;filter:grayscale(1) brightness(2.2) sepia(1) hue-rotate(-12deg) saturate(4);pointer-events:none">
+          <div style="position:relative;z-index:1">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF5560;font-weight:600">{{ t.distReach }}</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+              <div><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:40px;color:#D81F2A">18</div><div style="font-size:13px;color:#9097A0">{{ t.distS1 }}</div></div>
+              <div><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:40px;color:#D81F2A">60+</div><div style="font-size:13px;color:#9097A0">{{ t.distS2 }}</div></div>
+            </div>
+            <div style="display:grid;gap:2px;margin-top:24px">
+              <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:13px 0;border-bottom:1px solid #2A2E34"><span>Italia</span><span style="color:#FF8A92">HQ · Rosate (MI)</span></div>
+              <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:13px 0;border-bottom:1px solid #2A2E34"><span>{{ t.regEU }}</span><span style="color:#FF8A92">● ● ● ● ●</span></div>
+              <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:13px 0;border-bottom:1px solid #2A2E34"><span>{{ t.regEE }}</span><span style="color:#FF8A92">● ● ● ●</span></div>
+              <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:13px 0"><span>{{ t.regMed }}</span><span style="color:#FF8A92">● ● ●</span></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:800;margin:0 0 14px">{{ t.distBecome }}</h3>
+          <p style="color:#5C636B;font-size:16.5px;margin:0 0 22px">{{ t.distBecomeP }}</p>
+          <button onClick="{{ nav.orders }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;border:none;background:#0A0B0D;color:#fff;transition:transform .16s" style-hover="transform:translateY(-2px)">{{ t.distBtn }} →</button>
+          <div style="margin-top:30px;border:1px solid #E4E6E9;border-radius:16px;overflow:hidden;background:#F5F6F7">
+            <img src="assets/automechanika.png" alt="Automechanika Frankfurt" style="width:100%;height:auto">
+            <div style="padding:18px 20px">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#D81F2A;font-weight:600">{{ t.distEventEyebrow }}</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:17px;margin:6px 0 4px">{{ t.distEventT }}</div>
+              <p style="font-size:13.5px;color:#5C636B;margin:0">{{ t.distEventP }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ CATALOG ============ -->
+<sc-if value="{{ showCatalog }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Catalogo" data-view="catalog">
+  <div style="padding:90px 0 100px;background:#F5F6F7;min-height:62vh">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:62ch;margin-bottom:42px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.catlEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.catlH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.catlP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+        <div style="background:#fff;border:1px solid #E4E6E9;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px;box-shadow:0 10px 26px -20px rgba(10,15,20,.4)">
+          <div style="width:50px;height:50px;border-radius:12px;background:#D81F2A;color:#fff;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px">PDF</div>
+          <h4 style="font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;margin:0">{{ t.catlC1t }}</h4>
+          <p style="font-size:14px;color:#5C636B;flex:1;margin:0">{{ t.catlC1p }}</p>
+          <a href="assets/catalogo-est-2017.pdf" target="_blank" rel="noopener" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:14px 24px;border-radius:10px;background:#D81F2A;color:#fff;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;transition:transform .16s" style-hover="transform:translateY(-2px)">↓ {{ t.catlDl }}</a>
+        </div>
+        <div style="background:#0A0B0D;color:#EDEFF1;border:1px solid #0A0B0D;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:14px">
+          <div style="width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.08);color:#FF8A92;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px">WEB</div>
+          <h4 style="font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;margin:0">{{ t.catlC2t }}</h4>
+          <p style="font-size:14px;color:#9097A0;flex:1;margin:0">{{ t.catlC2p }}</p>
+          <button onClick="{{ nav.products }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:14px 24px;border-radius:10px;cursor:pointer;border:1px solid #2A2E34;background:rgba(255,255,255,.05);color:#EDEFF1;align-self:flex-start;transition:border-color .16s" style-hover="border-color:#D81F2A">{{ t.catlBrowse }} →</button>
+        </div>
+      </div>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A9097;margin-top:18px">{{ t.catlNote }}</p>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ ORDERS ============ -->
+<sc-if value="{{ showOrders }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Ordini" data-view="orders">
+  <div style="padding:90px 0 100px;background:#fff">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:62ch;margin-bottom:40px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.ordEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.ordH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.ordP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+        <form onSubmit="{{ onOrder }}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.fCompany }}</label><input required="{{ true }}" name="company" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+            <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.fVat }}</label><input name="vat" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.fName }}</label><input required="{{ true }}" name="name" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+            <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.fEmail }}</label><input required="{{ true }}" type="email" name="email" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+          </div>
+          <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.fMsg }}</label><textarea name="msg" placeholder="{{ t.fMsgPh }}" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A;resize:vertical;min-height:120px" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></textarea></div>
+          <button type="submit" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;border:none;background:#D81F2A;color:#fff;transition:transform .16s" style-hover="transform:translateY(-2px)">{{ t.fSend }} →</button>
+          <sc-if value="{{ orderOk }}" hint-placeholder-val="{{ false }}">
+            <div style="background:rgba(31,157,116,.1);border:1px solid #1F9D74;color:#15795A;padding:14px 16px;border-radius:10px;font-size:14px;margin-top:16px">{{ t.fOk }}</div>
+          </sc-if>
+          <p style="font-size:12px;color:#8A9097;margin-top:12px">{{ t.fNote }}</p>
+        </form>
+        <div style="background:linear-gradient(160deg,#15171C,#0A0B0D);color:#EDEFF1;border-radius:18px;padding:34px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#FF5560;font-weight:600">{{ t.ordDirect }}</div>
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34;margin-top:12px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.ordPhone }}</div><div style="font-size:15px">+39 02 908.48.291</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">Email</div><div style="font-size:15px"><a href="mailto:info@sacirest.com" style="color:#FF8A92">info@sacirest.com</a></div></div>
+          <div style="padding:16px 0"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.ordHours }}</div><div style="font-size:15px">{{ t.ordHoursV }}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ CONTACTS ============ -->
+<sc-if value="{{ showContacts }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Contatti" data-view="contacts">
+  <div style="padding:90px 0 100px;background:#F5F6F7">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div style="max-width:62ch;margin-bottom:40px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#D81F2A;font-weight:600;display:flex;align-items:center;gap:10px"><span style="width:26px;height:2px;background:#D81F2A;display:inline-block"></span>{{ t.conEyebrow }}</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.04;font-size:clamp(30px,4vw,46px);margin:18px 0 14px">{{ t.conH2 }}</h2>
+        <p style="color:#5C636B;font-size:17px;margin:0">{{ t.conP }}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+        <form onSubmit="{{ onContact }}">
+          <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.cName }}</label><input required="{{ true }}" name="name" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+          <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.cEmail }}</label><input required="{{ true }}" type="email" name="email" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></div>
+          <div style="margin-bottom:16px"><label style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5C636B;margin-bottom:8px">{{ t.cMsg }}</label><textarea name="msg" style="width:100%;padding:13px 15px;border:1px solid #E4E6E9;border-radius:10px;font-family:inherit;font-size:15px;background:#fff;color:#14161A;resize:vertical;min-height:120px" style-focus="outline:none;border-color:#D81F2A;box-shadow:0 0 0 3px rgba(216,31,42,.12)"></textarea></div>
+          <button type="submit" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:14.5px;padding:15px 26px;border-radius:10px;cursor:pointer;border:none;background:#D81F2A;color:#fff;transition:transform .16s" style-hover="transform:translateY(-2px)">{{ t.fSend2 }} →</button>
+          <sc-if value="{{ contactOk }}" hint-placeholder-val="{{ false }}">
+            <div style="background:rgba(31,157,116,.1);border:1px solid #1F9D74;color:#15795A;padding:14px 16px;border-radius:10px;font-size:14px;margin-top:16px">{{ t.fOk2 }}</div>
+          </sc-if>
+        </form>
+        <div style="background:linear-gradient(160deg,#15171C,#0A0B0D);color:#EDEFF1;border-radius:18px;padding:34px">
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.cAddr }}</div><div style="font-size:15px">via Malpaga, 9<br>20088 Rosate (MI), Italia</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.ordPhone }}</div><div style="font-size:15px">+39 02 908.48.291</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.cFax }}</div><div style="font-size:15px">+39 02 908.48.120</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid #2A2E34"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">Email</div><div style="font-size:15px"><a href="mailto:info@sacirest.com" style="color:#FF8A92">info@sacirest.com</a></div></div>
+          <div style="padding:16px 0"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A9097;margin-bottom:5px">{{ t.cVat }}</div><div style="font-family:'IBM Plex Mono',monospace;font-size:15px">11557210157</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#070809;color:#8A9097;padding:62px 0 30px">
+  <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:42px;padding-bottom:38px;border-bottom:1px solid #1E2126">
+      <div>
+        <div onClick="{{ nav.home }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;margin-bottom:15px">
+          <div style="width:38px;height:38px;border-radius:50%;background:#D81F2A;display:grid;place-items:center"><span style="font-family:'Archivo',sans-serif;font-weight:900;color:#fff;font-size:13px;letter-spacing:-.03em">EST</span></div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:17px;color:#EDEFF1;letter-spacing:.02em">SACIR <span style="color:#D81F2A">EST</span></div>
+        </div>
+        <p style="font-size:14px;max-width:34ch;margin:0">{{ t.footAbout }}</p>
+      </div>
+      <div>
+        <h5 style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#EDEFF1;margin:0 0 16px">{{ t.footNav }}</h5>
+        <a onClick="{{ nav.products }}" style="display:block;font-size:14px;padding:6px 0;cursor:pointer" style-hover="color:#FF8A92">{{ t.navProducts }}</a>
+        <a onClick="{{ nav.brands }}" style="display:block;font-size:14px;padding:6px 0;cursor:pointer" style-hover="color:#FF8A92">{{ t.navLines }}</a>
+        <a onClick="{{ nav.distribution }}" style="display:block;font-size:14px;padding:6px 0;cursor:pointer" style-hover="color:#FF8A92">{{ t.navDist }}</a>
+        <a onClick="{{ nav.catalog }}" style="display:block;font-size:14px;padding:6px 0;cursor:pointer" style-hover="color:#FF8A92">{{ t.navCatalog }}</a>
+      </div>
+      <div>
+        <h5 style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#EDEFF1;margin:0 0 16px">{{ t.footContact }}</h5>
+        <a href="mailto:info@sacirest.com" style="display:block;font-size:14px;padding:6px 0" style-hover="color:#FF8A92">info@sacirest.com</a>
+        <a style="display:block;font-size:14px;padding:6px 0">+39 02 908.48.291</a>
+        <a style="display:block;font-size:14px;padding:6px 0">{{ t.footLoc }}</a>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding-top:24px;font-family:'IBM Plex Mono',monospace;font-size:12px;flex-wrap:wrap;gap:10px">
+      <span>© 1964–2026 SACIR EST s.r.l. · P.I. 11557210157</span>
+      <span>{{ t.footProto }}</span>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE -->
+<sc-if value="{{ cookieShow }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:rgba(11,12,14,.97);color:#EDEFF1;border:1px solid #2A2E34;border-radius:14px;padding:18px 20px;z-index:60;display:flex;gap:16px;align-items:center;backdrop-filter:blur(8px);box-shadow:0 24px 60px -20px rgba(0,0,0,.7)">
+  <p style="font-size:13px;color:#9097A0;flex:1;margin:0">{{ t.cookieT }}</p>
+  <button onClick="{{ dismissCookie }}" style="font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;padding:11px 20px;border-radius:9px;cursor:pointer;border:none;background:#D81F2A;color:#fff">{{ t.cookieOk }}</button>
+</div>
+</sc-if>
+
+<!-- TOAST -->
+<sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#0A0B0D;color:#EDEFF1;padding:14px 22px;border-radius:12px;font-size:14px;z-index:80;box-shadow:0 18px 44px -14px rgba(0,0,0,.7);border:1px solid #2A2E34;max-width:90vw;text-align:center">{{ t.toastMsg }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { lang:'it', view:'home', openCat:null, menuOpen:false, cookieHidden:true, orderOk:false, contactOk:false, toast:false };
+
+  STR = {
+    it:{
+      navHome:'Home', navProducts:'Prodotti', navLines:'Linee', navDist:'Distribuzione', navCatalog:'Catalogo', navOrders:'Ordini', navContacts:'Contatti',
+      heroEyebrow:"Chimica per l'automotive · dal 1964",
+      heroH1a:'La chimica che tiene il', heroH1b:'motore in movimento.',
+      heroSub:'Additivi, fluidi e aerosol professionali prodotti a Rosate dal 1964. Una linea completa per auto e ferramenta, distribuita in 18 paesi.',
+      heroCta1:'Esplora i prodotti', heroCta2:'Diventa distributore',
+      trustMade:'Produzione propria', trustSince:'Esperienza dal', trustExport:'Export in', countriesWord:'paesi',
+      stat1:'Anno di fondazione', stat2:'Paesi serviti', stat3:'Anni di esperienza', stat4:'Categorie prodotto', stat5:'Referenze a catalogo',
+      aboutEyebrow:'Chi siamo', aboutH2:"Un'azienda in costante movimento.",
+      aboutP1:'Dal 1964 SACIR EST, con sede a Rosate (Milano), è tra le realtà leader in Italia ed Europa nella chimica per l\u2019auto e per il settore ferramenta.',
+      aboutP2:'I nostri prodotti nascono da materie prime selezionate, tecnologie di produzione avanzate e un controllo qualità costante, nel rispetto delle normative su sicurezza e ambiente.',
+      aboutP3:'Una rete distributiva capillare e in continua espansione ci ha portato in 18 paesi nel mondo, al servizio del professionista e del cliente privato.',
+      pil1t:'Innovazione', pil1p:'Ricerca di laboratorio continua per prodotti sempre più efficienti.',
+      pil2t:'Affidabilità', pil2p:'Qualità garantita da oltre sessant\u2019anni di esperienza sul campo.',
+      pil3t:'Professionalità', pil3p:'Gestione vendite e supporto tecnico per ogni mercato.',
+      homeCatEyebrow:'Gamma prodotti', homeCatH2:'Sette categorie, una linea completa.',
+      homeCatP:'Dalla cura del motore al lavavetri Velox Glass: seleziona una categoria per vedere i prodotti e la documentazione tecnica.',
+      viewProducts:'Vedi prodotti',
+      ctaH:'Pronto a lavorare con noi?', ctaP:'Richiedi un preventivo B2B o scarica il catalogo completo dei prodotti SACIR EST.',
+      ctaBtn1:'Richiedi preventivo', ctaBtn2:'Scarica catalogo',
+      prodEyebrow:'Catalogo prodotti', prodH2:'Una linea completa per auto e officina.',
+      prodP:'Seleziona una categoria per vedere i prodotti, le schede tecniche (TDS) e di sicurezza (SDS).',
+      demoNote:'prodotti dimostrativi', 
+      linesEyebrow:'Le nostre linee', linesH2:'Marchi di casa SACIR EST.',
+      linesP:'Accanto alla produzione EST, gestiamo marchi storici per ogni esigenza dell\u2019auto e dell\u2019officina.',
+      distEyebrow:'Distribuzione', distH2:'Una rete in 18 paesi.',
+      distP:'Dall\u2019Italia all\u2019Europa e oltre: collaboriamo con distributori, grossisti e rivenditori del settore automotive e ferramenta.',
+      distReach:'Copertura attuale', distS1:'Paesi serviti', distS2:'Anni di export',
+      regEU:'Europa Occidentale', regEE:'Europa Orientale', regMed:'Mediterraneo & MENA',
+      distBecome:'Diventa distributore', distBecomeP:'Cerchi un partner affidabile per la chimica automotive nel tuo mercato? Raccontaci di te e il nostro export team ti contatterà.',
+      distBtn:'Richiedi una partnership',
+      distEventEyebrow:'Fiere internazionali', distEventT:'Automechanika Frankfurt', distEventP:'Presenti alle principali fiere del settore automotive aftermarket nel mondo.',
+      catlEyebrow:'Catalogo & documentazione', catlH2:'Scarica il catalogo.',
+      catlP:'Catalogo generale, schede tecniche e schede di sicurezza dei prodotti.',
+      catlC1t:'Catalogo generale EST', catlC1p:"L'intera gamma auto e ferramenta in un unico documento, con codici e formati.",
+      catlDl:'Scarica PDF', catlC2t:'Catalogo online', catlC2p:'Sfoglia i prodotti per categoria con schede tecniche e di sicurezza.',
+      catlBrowse:'Sfoglia online', catlNote:'Il PDF collegato è il catalogo EST originale fornito per questa demo.',
+      ordEyebrow:'Ordini & richieste B2B', ordH2:'Richiedi un preventivo.',
+      ordP:'Compila il modulo: il nostro ufficio commerciale ti risponderà con disponibilità e condizioni.',
+      fCompany:'Azienda', fVat:'Partita IVA', fName:'Referente', fEmail:'Email', fMsg:'Prodotti e quantità richieste',
+      fMsgPh:'Es. Additivo diesel, antigelo concentrato, Velox Glass...', fSend:'Invia richiesta',
+      fOk:'✓ Richiesta inviata (demo). In produzione questo modulo invierà l\u2019email a info@sacirest.com.',
+      fNote:'Inviando accetti il trattamento dei dati secondo la privacy policy.',
+      ordDirect:'Contatto diretto', ordPhone:'Telefono', ordHours:'Orari ufficio', ordHoursV:'Lun–Ven · 8:30–17:30 CET',
+      conEyebrow:'Contatti', conH2:'Parliamo.', conP:'SACIR EST s.r.l. — sede produttiva e uffici a Rosate, alle porte di Milano.',
+      cName:'Nome e cognome', cEmail:'Email', cMsg:'Messaggio', fSend2:'Invia messaggio',
+      fOk2:'✓ Messaggio inviato (demo).', cAddr:'Sede', cFax:'Fax', cVat:'Partita IVA',
+      footAbout:'Chimica per l\u2019auto e la ferramenta dal 1964. Made in Rosate, Italy.',
+      footNav:'Navigazione', footContact:'Contatti', footLoc:'Rosate (MI), Italia', footProto:'Prototipo · demo',
+      cookieT:'Usiamo cookie tecnici e analitici per migliorare la navigazione.', cookieOk:'Accetta',
+      toastDoc:'Documento dimostrativo — le schede TDS/SDS reali saranno collegate in produzione.'
+    },
+    en:{
+      navHome:'Home', navProducts:'Products', navLines:'Brands', navDist:'Distribution', navCatalog:'Catalogue', navOrders:'Orders', navContacts:'Contacts',
+      heroEyebrow:'Automotive chemistry · since 1964',
+      heroH1a:'The chemistry that keeps', heroH1b:'engines moving.',
+      heroSub:'Professional additives, fluids and aerosols made in Rosate since 1964. A complete line for automotive and hardware, distributed in 18 countries.',
+      heroCta1:'Explore products', heroCta2:'Become a distributor',
+      trustMade:'In-house production', trustSince:'Expertise since', trustExport:'Export to', countriesWord:'countries',
+      stat1:'Founded', stat2:'Countries served', stat3:'Years of expertise', stat4:'Product categories', stat5:'Catalogue references',
+      aboutEyebrow:'About us', aboutH2:'A company always in motion.',
+      aboutP1:'Since 1964 SACIR EST, based in Rosate (Milan), has been among the leaders in Italy and Europe in automotive and hardware chemistry.',
+      aboutP2:'Our products are built on selected raw materials, advanced production technology and constant quality control, in full compliance with safety and environmental standards.',
+      aboutP3:'A widespread, ever-growing distribution network has brought us to 18 countries worldwide, serving both professionals and private customers.',
+      pil1t:'Innovation', pil1p:'Continuous lab research for ever more efficient products.',
+      pil2t:'Reliability', pil2p:'Quality backed by over sixty years of field experience.',
+      pil3t:'Professionalism', pil3p:'Sales management and technical support for every market.',
+      homeCatEyebrow:'Product range', homeCatH2:'Seven categories, one complete line.',
+      homeCatP:'From engine care to Velox Glass screenwash: pick a category to see the products and technical documentation.',
+      viewProducts:'View products',
+      ctaH:'Ready to work with us?', ctaP:'Request a B2B quote or download the full SACIR EST product catalogue.',
+      ctaBtn1:'Request a quote', ctaBtn2:'Download catalogue',
+      prodEyebrow:'Product catalogue', prodH2:'A complete line for car and workshop.',
+      prodP:'Pick a category to see the products and their technical (TDS) and safety (SDS) data sheets.',
+      demoNote:'demo products',
+      linesEyebrow:'Our brands', linesH2:'SACIR EST house brands.',
+      linesP:'Alongside EST production, we manage long-standing brands for every automotive and workshop need.',
+      distEyebrow:'Distribution', distH2:'A network across 18 countries.',
+      distP:'From Italy to Europe and beyond: we partner with distributors, wholesalers and retailers in the automotive and hardware sector.',
+      distReach:'Current coverage', distS1:'Countries served', distS2:'Years of export',
+      regEU:'Western Europe', regEE:'Eastern Europe', regMed:'Mediterranean & MENA',
+      distBecome:'Become a distributor', distBecomeP:'Looking for a reliable partner for automotive chemistry in your market? Tell us about you and our export team will get in touch.',
+      distBtn:'Request a partnership',
+      distEventEyebrow:'International trade fairs', distEventT:'Automechanika Frankfurt', distEventP:'Present at the leading automotive aftermarket trade fairs worldwide.',
+      catlEyebrow:'Catalogue & documentation', catlH2:'Download the catalogue.',
+      catlP:'General catalogue, technical and safety data sheets for the products.',
+      catlC1t:'EST general catalogue', catlC1p:'The full automotive and hardware range in a single document, with codes and formats.',
+      catlDl:'Download PDF', catlC2t:'Online catalogue', catlC2p:'Browse the products by category with technical and safety sheets.',
+      catlBrowse:'Browse online', catlNote:'The linked PDF is the original EST catalogue provided for this demo.',
+      ordEyebrow:'Orders & B2B requests', ordH2:'Request a quote.',
+      ordP:'Fill in the form: our sales office will reply with availability and terms.',
+      fCompany:'Company', fVat:'VAT number', fName:'Contact', fEmail:'Email', fMsg:'Products and quantities required',
+      fMsgPh:'E.g. Diesel additive, concentrated antifreeze, Velox Glass...', fSend:'Send request',
+      fOk:'✓ Request sent (demo). In production this form would email info@sacirest.com.',
+      fNote:'By submitting you accept data processing under the privacy policy.',
+      ordDirect:'Direct contact', ordPhone:'Phone', ordHours:'Office hours', ordHoursV:'Mon–Fri · 8:30–17:30 CET',
+      conEyebrow:'Contacts', conH2:"Let's talk.", conP:'SACIR EST s.r.l. — production site and offices in Rosate, just outside Milan.',
+      cName:'Full name', cEmail:'Email', cMsg:'Message', fSend2:'Send message',
+      fOk2:'✓ Message sent (demo).', cAddr:'Address', cFax:'Fax', cVat:'VAT number',
+      footAbout:'Automotive and hardware chemistry since 1964. Made in Rosate, Italy.',
+      footNav:'Navigation', footContact:'Contacts', footLoc:'Rosate (MI), Italy', footProto:'Prototype · demo',
+      cookieT:'We use technical and analytics cookies to improve browsing.', cookieOk:'Accept',
+      toastDoc:'Demo document — real TDS/SDS sheets will be linked in production.'
+    }
+  };
+
+  CATS = [
+    {key:'additivi', accent:'#D81F2A', img:'assets/add-diesel-cleaner.png', it:['Additivi','Pulitori iniettori, trattamenti carburante e olio motore.'], en:['Additives','Injector cleaners, fuel and engine-oil treatments.']},
+    {key:'raffreddamento', accent:'#1F9D74', img:'assets/cool-permanent-pink.png', it:['Antigelo & Raffreddamento','Liquidi anticongelanti e per radiatore.'], en:['Antifreeze & Cooling','Coolants and ready-to-use radiator fluids.']},
+    {key:'velox', accent:'#2E73C7', img:'assets/velox-concentrato.png', it:['Lavavetri · Velox Glass','Liquidi lavavetro estivi e invernali.'], en:['Screenwash · Velox Glass','Summer and winter washer fluids.']},
+    {key:'freni', accent:'#C9551F', img:'assets/brake-dot4-green.png', it:['Freni & Idroguida','Fluidi freno DOT 4 e servosterzo.'], en:['Brakes & Steering','DOT 4 brake and power-steering fluids.']},
+    {key:'aerosol', accent:'#6B7177', img:'assets/aer-super-lube.png', it:['Aerosol & Spray','Lubrificanti, grassi e spray tecnici.'], en:['Aerosols & Sprays','Lubricants, greases and technical sprays.']},
+    {key:'cura', accent:'#C8932E', img:'assets/care-cera.png', it:["Cura dell'Auto",'Cere, paste, detergenti e igiene mani.'], en:['Car Care','Waxes, pastes, cleaners and hand hygiene.']},
+    {key:'officina', accent:'#B3151F', img:'assets/seal-mark-box.png', it:['Sigillanti & Officina','Siliconici MARK, ermetici e smerigli.'], en:['Sealants & Workshop','MARK silicones, sealants and grinding pastes.']}
+  ];
+
+  PRODUCTS = {
+    additivi:[
+      {code:'01-061', pack:'250 ml', img:'assets/add-diesel-cleaner.png', it:'Pulitore Iniettori Diesel', en:'Diesel Injector Cleaner'},
+      {code:'01-014', pack:'250 ml', img:'assets/add-diesel.png', it:'Additivo Diesel Multifunzione', en:'Multifunction Diesel Additive'},
+      {code:'01-022', pack:'250 ml', img:'assets/add-benzina-antidet.png', it:'Antidetonante Benzina', en:'Petrol Anti-Knock'},
+      {code:'01-084', pack:'250 ml', img:'assets/add-etano.png', it:'Etano+ Ottani Benzina', en:'Etano+ Octane Booster'},
+      {code:'01-046', pack:'250 ml', img:'assets/add-benzina-cleaner.png', it:'Pulitore Iniettori Benzina', en:'Petrol Injector Cleaner'},
+      {code:'01-107', pack:'300 ml', img:'assets/add-oil-treatment.png', it:'Oil Treatment Special Formula', en:'Oil Treatment Special Formula'},
+      {code:'01-190', pack:'250 ml', img:'assets/add-engine-flush.png', it:'Engine Flush Lavaggio Motore', en:'Engine Flush'},
+      {code:'01-145', pack:'250 ml', img:'assets/add-diesel-blue.png', it:'Additivo Diesel Inverno', en:'Winter Diesel Additive'}
+    ],
+    raffreddamento:[
+      {code:'07-418', pack:'1 L', img:'assets/cool-permanent-pink.png', it:'Permanent Plus Antigelo -40°C', en:'Permanent Plus Antifreeze -40°C'},
+      {code:'07-401', pack:'1 L', img:'assets/cool-antigelo-yellow.png', it:'Antigelo Concentrato', en:'Concentrated Antifreeze'},
+      {code:'07-128', pack:'1 L', img:'assets/cool-radiatore.png', it:'Liquido Radiatore Pronto Uso', en:'Ready-to-Use Radiator Fluid'},
+      {code:'07-227', pack:'1 L', img:'assets/cool-mariner.png', it:'Mariner Antigelo Nautico', en:'Mariner Marine Antifreeze'}
+    ],
+    velox:[
+      {code:'09-511', pack:'250 ml', img:'assets/velox-concentrato.png', it:'Velox Glass Concentrato', en:'Velox Glass Concentrate'},
+      {code:'09-528', pack:'1 L', img:'assets/velox-estivo.png', it:'Velox Glass Estivo', en:'Velox Glass Summer'},
+      {code:'09-535', pack:'1 L', img:'assets/velox-green.png', it:'Velox Glass Insetti', en:'Velox Glass Insect Remover'},
+      {code:'09-573', pack:'5 L', img:'assets/velox-5l.png', it:'Velox Glass Professionale', en:'Velox Glass Professional'},
+      {code:'09-566', pack:'sacca', img:'assets/velox-pouch.png', it:'Velox Glass Mini Ricarica', en:'Velox Glass Mini Refill'}
+    ],
+    freni:[
+      {code:'07-043', pack:'500 ml', img:'assets/brake-dot4-green.png', it:'Brake Fluid DOT 4', en:'Brake Fluid DOT 4'},
+      {code:'07-067', pack:'250 ml', img:'assets/brake-dot4-black.png', it:'Brake Fluid DOT 4 Plus', en:'Brake Fluid DOT 4 Plus'},
+      {code:'07-074', pack:'250 ml', img:'assets/steer-idroguida.png', it:'Olio Idroguida', en:'Power Steering Oil'},
+      {code:'07-159', pack:'1 L', img:'assets/steer-servosterzo.png', it:'Olio Servosterzo', en:'Power Steering Fluid'}
+    ],
+    aerosol:[
+      {code:'08-001', pack:'400 ml', img:'assets/aer-super-lube.png', it:'Super Lubrificante Professionale', en:'Professional Super Lubricant'},
+      {code:'08-024', pack:'400 ml', img:'assets/aer-grasso.png', it:'Grasso Spray', en:'Grease Spray'},
+      {code:'08-031', pack:'400 ml', img:'assets/aer-starting.png', it:'Start Pilota Avviamento', en:'Engine Starting Fluid'},
+      {code:'08-018', pack:'400 ml', img:'assets/aer-lube-spray.png', it:'Lubrificante Spray Multiuso', en:'Multi-purpose Lube Spray'},
+      {code:'08-202', pack:'400 ml', img:'assets/aer-cleaner.png', it:'Pulitore Freni Spray', en:'Brake Cleaner Spray'}
+    ],
+    cura:[
+      {code:'09-016', pack:'barattolo', img:'assets/care-cera.png', it:'Cera per Auto', en:'Car Wax'},
+      {code:'09-115', pack:'barattolo', img:'assets/care-pasta-abrasiva.png', it:'Pasta Abrasiva', en:'Abrasive Paste'},
+      {code:'09-238', pack:'500 ml', img:'assets/care-nero-gomme.png', it:'Nero Gomme Lucidante', en:'Tyre Black Shine'},
+      {code:'09-252', pack:'1 L', img:'assets/care-shampoo.png', it:'Auto Shampoo Concentrato', en:'Concentrated Car Shampoo'},
+      {code:'09-245', pack:'tubetto', img:'assets/care-tool-graffi.png', it:'Tool Graffi Ritocco', en:'Scratch Repair'},
+      {code:'09-313', pack:'500 ml', img:'assets/care-cockpit.png', it:'Pulitore Cruscotti', en:'Dashboard Cleaner'},
+      {code:'09-337', pack:'secchiello', img:'assets/care-licia.png', it:'Pasta Lavamani Licia', en:'Licia Hand Wash Paste'},
+      {code:'09-344', pack:'barattolo', img:'assets/care-easywipe.png', it:'Easy Wipe Salviette', en:'Easy Wipe Cloths'}
+    ],
+    officina:[
+      {code:'08-002', pack:'box', img:'assets/seal-mark-box.png', it:'Mastice Siliconico MARK', en:'MARK Silicone Sealant'},
+      {code:'08-057', pack:'tubetto', img:'assets/seal-marmitte.png', it:'Assemblaggio Marmitte', en:'Exhaust Assembly Paste'},
+      {code:'08-101', pack:'250 ml', img:'assets/seal-ermetico.png', it:'Ermetico per Guarnizioni', en:'Gasket Sealant'},
+      {code:'08-019', pack:'barattolo', img:'assets/seal-smeriglio-grossa.png', it:'Smeriglio Valvole Grana Grossa', en:'Coarse Valve Grinding Paste'},
+      {code:'08-026', pack:'barattolo', img:'assets/seal-smeriglio-fine.png', it:'Smeriglio Valvole Grana Fine', en:'Fine Valve Grinding Paste'}
+    ]
+  };
+
+  LINES = [
+    {key:'est', img:'assets/feature-boxes.png', it:['EST','La chimica per l\u2019auto a marchio proprio: additivi, fluidi e aerosol prodotti a Rosate.'], en:['EST','Own-brand automotive chemistry: additives, fluids and aerosols made in Rosate.']},
+    {key:'velox', img:'assets/velox-concentrato.png', it:['Velox Glass','Marchio storico dei liquidi lavavetro: concentrati, estivi e invernali.'], en:['Velox Glass','Historic screenwash brand: concentrates, summer and winter fluids.']},
+    {key:'mark', img:'assets/seal-mark-box.png', it:['MARK','Mastici siliconici e sigillanti tecnici per officina e carrozzeria.'], en:['MARK','Silicone sealants and technical compounds for workshop and bodyshop.']},
+    {key:'licia', img:'assets/care-licia.png', it:['Licia','Igiene e pulizia delle mani per il professionista.'], en:['Licia','Hand cleaning and hygiene for professionals.']}
+  ];
+
+  componentDidMount(){
+    try{ if(!localStorage.getItem('est_cookie_ok')) this.setState({cookieHidden:false}); }
+    catch(e){ this.setState({cookieHidden:false}); }
+  }
+
+  go(view){ this.setState({view, menuOpen:false, openCat: view==='products'? this.state.openCat : null}); try{window.scrollTo({top:0,behavior:'auto'});}catch(e){} }
+  openCategory(key){ this.setState({view:'products', openCat:key, menuOpen:false}); try{window.scrollTo({top:0,behavior:'auto'});}catch(e){} }
+  setLang(l){ this.setState({lang:l}); }
+  toggleMenu(){ this.setState(s=>({menuOpen:!s.menuOpen})); }
+  dismissCookie(){ try{localStorage.setItem('est_cookie_ok','1');}catch(e){} this.setState({cookieHidden:true}); }
+  showToast(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:false}),3400); }
+  submitOrder(e){ e.preventDefault(); this.setState({orderOk:true}); if(e.target.reset) e.target.reset(); }
+  submitContact(e){ e.preventDefault(); this.setState({contactOk:true}); if(e.target.reset) e.target.reset(); }
+
+  renderVals(){
+    const L = this.state.lang;
+    const t = Object.assign({}, this.STR[L], { toastMsg: this.state.toast || '' });
+    const v = this.state.view;
+    const navKeys = [['home','navHome'],['products','navProducts'],['brands','navLines'],['distribution','navDist'],['catalog','navCatalog'],['orders','navOrders'],['contacts','navContacts']];
+    const navItems = navKeys.map(([k,lab])=>({
+      key:k, label:t[lab],
+      bg: v===k ? '#D81F2A' : 'transparent',
+      fg: v===k ? '#ffffff' : '#AEB4BB',
+      go: ()=>this.go(k)
+    }));
+    const nav = {};
+    navKeys.forEach(([k])=>{ nav[k] = ()=>this.go(k); });
+
+    const cats = this.CATS.map(c=>({ key:c.key, accent:c.accent, img:c.img, name:c[L][0], desc:c[L][1], open:()=>this.openCategory(c.key) }));
+    const openCatObj = this.state.openCat ? this.CATS.find(c=>c.key===this.state.openCat) : null;
+    const currentProducts = openCatObj ? (this.PRODUCTS[openCatObj.key]||[]).map(p=>({ code:p.code, pack:p.pack, img:p.img, name:p[L] })) : [];
+    const lines = this.LINES.map(l=>({ key:l.key, img:l.img, name:l[L][0], desc:l[L][1] }));
+
+    return {
+      t, navItems, nav, cats, lines, currentProducts,
+      menuOpenStr: this.state.menuOpen ? '1' : '0',
+      langIt: ()=>this.setLang('it'), langEn: ()=>this.setLang('en'),
+      itBg: L==='it' ? '#EDEFF1' : 'transparent', itFg: L==='it' ? '#0A0B0D' : '#8A9097',
+      enBg: L==='en' ? '#EDEFF1' : 'transparent', enFg: L==='en' ? '#0A0B0D' : '#8A9097',
+      toggleMenu: ()=>this.toggleMenu(),
+      dismissCookie: ()=>this.dismissCookie(),
+      docClick: ()=>this.showToast(t.toastDoc),
+      onOrder: (e)=>this.submitOrder(e), onContact: (e)=>this.submitContact(e),
+      showHome: v==='home', showProducts: v==='products', showBrands: v==='brands',
+      showDist: v==='distribution', showCatalog: v==='catalog', showOrders: v==='orders', showContacts: v==='contacts',
+      hasOpenCat: !!openCatObj,
+      openCatName: openCatObj ? openCatObj[L][0] : '',
+      openCatAccent: openCatObj ? openCatObj.accent : '#D81F2A',
+      cookieShow: !this.state.cookieHidden,
+      toastShow: !!this.state.toast,
+      orderOk: this.state.orderOk, contactOk: this.state.contactOk
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SACIR EST · Chimica per l'automotive dal 1964</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+  :root{
+    --ink:#14181E;--ink-soft:#1C222B;--ink-line:rgba(255,255,255,.10);
+    --paper:#EEF1F4;--card:#FFFFFF;--line:#D8DDE4;
+    --amber:#FF5A1F;--amber-2:#E8430A;--teal:#0F9AA0;
+    --text:#11151A;--muted:#5A6571;--d-text:#EDEFF2;--d-muted:#9AA4B0;--r:14px;
+    --display:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --mono:'Space Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:var(--body);background:var(--paper);color:var(--text);line-height:1.55;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700}
+
+  header{position:sticky;top:0;z-index:60;background:rgba(20,24,30,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--ink-line)}
+  .nav{display:flex;align-items:center;gap:14px;height:64px;color:var(--d-text)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;letter-spacing:.04em;font-size:18px;color:#fff}
+  .brand .mk{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--amber),var(--amber-2));display:grid;place-items:center;font-family:var(--mono);font-weight:700;color:#fff;font-size:13px;box-shadow:0 4px 14px rgba(255,90,31,.35)}
+  .brand small{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--d-muted);display:block;font-weight:400;margin-top:-3px}
+  nav.links{margin-left:auto;display:flex;gap:26px;align-items:center}
+  nav.links a{font-size:14px;font-weight:500;color:var(--d-muted);transition:color .2s;cursor:pointer}
+  nav.links a:hover{color:#fff}
+  .tools{display:flex;align-items:center;gap:12px}
+  .lang{display:flex;border:1px solid var(--ink-line);border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:11px}
+  .lang button{background:transparent;color:var(--d-muted);border:0;padding:6px 9px;cursor:pointer;font-family:inherit;font-weight:700;letter-spacing:.1em}
+  .lang button.on{background:var(--amber);color:#fff}
+  .cart-btn{position:relative;background:transparent;border:1px solid var(--ink-line);color:#fff;width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center}
+  .cart-btn:hover{border-color:var(--amber)}.cart-btn svg{width:18px;height:18px}
+  .cart-count{position:absolute;top:-7px;right:-7px;background:var(--amber);color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px;transform:scale(0);transition:transform .2s}
+  .cart-count.show{transform:scale(1)}
+  .burger{display:none;background:transparent;border:1px solid var(--ink-line);color:#fff;width:38px;height:38px;border-radius:9px;cursor:pointer;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+  .burger span{width:16px;height:2px;background:#fff;border-radius:2px}
+  @media(max-width:860px){
+    nav.links{position:fixed;inset:64px 0 auto 0;background:var(--ink);flex-direction:column;gap:0;padding:8px 0;border-bottom:1px solid var(--ink-line);transform:translateY(-130%);transition:transform .3s;margin-left:0}
+    nav.links.open{transform:translateY(0)}
+    nav.links a{padding:14px 22px;width:100%;border-bottom:1px solid var(--ink-line);font-size:15px}
+    .burger{display:flex;margin-left:auto}.tools{order:-1}
+  }
+
+  .hero{background:radial-gradient(120% 120% at 80% 0%,#222b36 0%,var(--ink) 55%);color:var(--d-text);position:relative;overflow:hidden;padding:64px 0 0}
+  .hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--ink-line) 1px,transparent 1px),linear-gradient(90deg,var(--ink-line) 1px,transparent 1px);background-size:46px 46px;opacity:.4;-webkit-mask-image:radial-gradient(80% 80% at 70% 10%,#000,transparent 75%);mask-image:radial-gradient(80% 80% at 70% 10%,#000,transparent 75%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;position:relative;z-index:2}
+  .hero h1{font-family:var(--display);font-weight:900;font-size:clamp(2.3rem,6vw,4.2rem);line-height:1.0;letter-spacing:-.02em;margin:18px 0}
+  .hero h1 em{font-style:normal;color:var(--amber)}
+  .hero p.lead{color:var(--d-muted);font-size:clamp(1rem,1.4vw,1.18rem);max-width:46ch}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .btn{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.02em;padding:14px 22px;border-radius:10px;cursor:pointer;border:1px solid transparent;transition:transform .15s,background .2s;display:inline-flex;align-items:center;gap:8px}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--amber);color:#fff;box-shadow:0 8px 24px rgba(255,90,31,.32)}
+  .btn-primary:hover{background:var(--amber-2)}
+  .btn-ghost{background:transparent;color:#fff;border-color:var(--ink-line)}
+  .btn-ghost:hover{border-color:#fff}
+  .gauge{position:relative;justify-self:center;width:230px}
+  .bottle{width:100%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5))}
+  .spec{position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--d-muted);background:rgba(20,24,30,.7);border:1px solid var(--ink-line);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)}
+  .spec b{color:var(--amber)}.spec.s1{top:14%;left:-46px}.spec.s2{top:48%;right:-52px}.spec.s3{bottom:10%;left:-40px}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:30px}.gauge{width:180px;margin-bottom:8px}.spec.s1{left:-10px}.spec.s2{right:-14px}.spec.s3{left:-6px}}
+  .stats{position:relative;z-index:2;margin-top:54px;border-top:1px solid var(--ink-line);display:grid;grid-template-columns:repeat(4,1fr)}
+  .stats div{padding:22px 8px;text-align:center;border-right:1px solid var(--ink-line)}
+  .stats div:last-child{border-right:0}
+  .stats .num{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3vw,2.3rem);color:#fff}
+  .stats .lab{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--d-muted);margin-top:4px}
+  @media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.stats div:nth-child(2){border-right:0}.stats div:nth-child(1),.stats div:nth-child(2){border-bottom:1px solid var(--ink-line)}}
+
+  section.block{padding:74px 0}
+  .head{max-width:660px;margin-bottom:34px}
+  .head h2{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3.6vw,2.6rem);letter-spacing:-.02em;line-height:1.05;margin:10px 0}
+  .head p{color:var(--muted);font-size:1.02rem}
+
+  .sectors{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .sector{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,box-shadow .2s}
+  .sector:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(20,24,30,.10)}
+  .sector .ic{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
+  .sector.auto .ic{background:rgba(255,90,31,.12);color:var(--amber)}
+  .sector.diy .ic{background:rgba(15,154,160,.13);color:var(--teal)}
+  .sector h3{font-family:var(--display);font-weight:700;font-size:1.3rem;margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:5px 10px;border-radius:20px;background:var(--paper);border:1px solid var(--line);color:var(--muted)}
+  .more{margin-top:18px;background:transparent;border:0;color:var(--amber);font-family:var(--display);font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:0}
+  .more svg{width:16px;height:16px;transition:transform .2s}
+  .more:hover svg{transform:translateX(4px)}
+  @media(max-width:680px){.sectors{grid-template-columns:1fr}}
+
+  .shop{background:var(--ink);color:var(--d-text)}
+  .shop .head h2{color:#fff}.shop .head p{color:var(--d-muted)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .filters button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:30px;background:transparent;border:1px solid var(--ink-line);color:var(--d-muted);cursor:pointer;transition:.2s}
+  .filters button.on{background:var(--amber);border-color:var(--amber);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .prod{background:var(--ink-soft);border:1px solid var(--ink-line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+  .prod:hover{border-color:var(--amber);transform:translateY(-3px)}
+  .prod .vis{height:150px;border-radius:10px;background:linear-gradient(180deg,#fff,#e9edf1);display:grid;place-items:center;overflow:hidden;margin-bottom:12px}
+  .prod .vis img{width:100%;height:100%;object-fit:contain;padding:12px}
+  .prod .vis svg{height:118px}
+  .ptag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+  .ptag.teal{color:var(--teal)}
+  .prod h4{font-family:var(--display);font-weight:600;font-size:1.02rem;margin:4px 0 2px;color:#fff}
+  .prod .ds{font-size:.82rem;color:var(--d-muted);flex:1}
+  .prod .row{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+  .price{font-family:var(--display);font-weight:800;font-size:1.25rem;color:#fff}
+  .add{background:var(--amber);color:#fff;border:0;border-radius:9px;padding:9px 14px;font-family:var(--display);font-weight:700;font-size:13px;cursor:pointer;transition:background .2s}
+  .add:hover{background:var(--amber-2)}.add.done{background:var(--teal)}
+  @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+
+  .proposal{background:linear-gradient(180deg,#fff,var(--paper))}
+  .ribbon{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;border-radius:30px;margin-bottom:14px}
+  .ribbon i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(255,90,31,.25)}
+  .svc{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .svc .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;transition:transform .2s,box-shadow .2s}
+  .svc .card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(20,24,30,.10)}
+  .svc .n{font-family:var(--mono);font-size:11px;color:var(--amber);font-weight:700}
+  .svc .ic2{width:42px;height:42px;border-radius:10px;background:var(--ink);color:var(--amber);display:grid;place-items:center;margin:10px 0 12px}
+  .svc .ic2 svg{width:20px;height:20px}
+  .svc h4{font-family:var(--display);font-weight:700;font-size:1.05rem;margin-bottom:5px}
+  .svc p{font-size:.85rem;color:var(--muted);line-height:1.45}
+  @media(max-width:980px){.svc{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.svc{grid-template-columns:1fr}}
+  .brands{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:36px}
+  .brands span{font-family:var(--display);font-weight:800;font-size:1.2rem;color:#aab2bc;letter-spacing:.02em}
+
+  .contact{background:var(--ink);color:var(--d-text)}
+  .contact .head h2{color:#fff}
+  .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .info-item{display:flex;gap:13px;padding:15px 0;border-bottom:1px solid var(--ink-line)}
+  .info-item .ic3{width:38px;height:38px;border-radius:9px;background:var(--ink-soft);color:var(--amber);display:grid;place-items:center;flex:none}
+  .info-item .ic3 svg{width:17px;height:17px}
+  .info-item .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--d-muted)}
+  .info-item .v{color:#fff;font-weight:500}
+  form{display:grid;gap:12px}
+  form input,form textarea{background:var(--ink-soft);border:1px solid var(--ink-line);border-radius:10px;padding:13px 14px;color:#fff;font-family:var(--body);font-size:15px;width:100%}
+  form input:focus,form textarea:focus{outline:none;border-color:var(--amber)}
+  form textarea{min-height:96px;resize:vertical}
+  .form-ok{display:none;color:var(--teal);font-family:var(--mono);font-size:13px;padding-top:6px}
+  .form-ok.show{display:block}
+  @media(max-width:760px){.cgrid{grid-template-columns:1fr}}
+
+  footer{background:#0E1116;color:var(--d-muted);padding:28px 0;font-size:13px}
+  .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+  .foot .cr{font-family:var(--mono);font-size:10px;color:#6b7682;letter-spacing:.04em}
+
+  .scrim{position:fixed;inset:0;background:rgba(10,12,16,.55);opacity:0;visibility:hidden;transition:.25s;z-index:90}
+  .scrim.open{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,90vw);background:#fff;z-index:100;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+  .drawer.open{transform:translateX(0)}
+  .drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--line)}
+  .drawer .dh h3{font-family:var(--display);font-weight:800;font-size:1.2rem}
+  .drawer .close{background:none;border:0;font-size:24px;cursor:pointer;color:var(--muted);line-height:1}
+  .ditems{flex:1;overflow:auto;padding:8px 20px}
+  .ditem{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+  .ditem .nm{font-family:var(--display);font-weight:600;font-size:.95rem}
+  .ditem .pr{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .qty{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .qty button{width:26px;height:26px;border:1px solid var(--line);background:#fff;border-radius:7px;cursor:pointer;font-size:15px;color:var(--text)}
+  .qty span{font-family:var(--mono);min-width:18px;text-align:center}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:.9rem}
+  .dfoot{padding:20px;border-top:1px solid var(--line)}
+  .total{display:flex;justify-content:space-between;font-family:var(--display);font-weight:800;font-size:1.2rem;margin-bottom:14px}
+  .dfoot .btn-primary{width:100%;justify-content:center}
+  .note{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:.06em}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="mk">SE</span><span>SACIR EST<small>ROSATE · MILANO · IT</small></span></a>
+    <nav class="links" id="menu">
+      <a href="#sectors" data-it="Settori" data-en="Sectors">Settori</a>
+      <a href="#shop" data-it="Prodotti" data-en="Products">Prodotti</a>
+      <a href="#proposal" data-it="Proposta" data-en="Proposal">Proposta</a>
+      <a href="#contact" data-it="Contatti" data-en="Contact">Contatti</a>
+    </nav>
+    <div class="tools">
+      <div class="lang" id="lang"><button data-l="it" class="on">IT</button><button data-l="en">EN</button></div>
+      <button class="cart-btn" id="openCart" aria-label="Carrello">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M6 6 5 3H2"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" data-it="CHIMICA PER L'AUTOMOTIVE · DAL 1964" data-en="AUTOMOTIVE CHEMICALS · SINCE 1964">CHIMICA PER L'AUTOMOTIVE · DAL 1964</span>
+        <h1 data-it="Prodotti chimici che il mercato sceglie da <em>60 anni</em>." data-en="Chemistry the market has trusted for <em>60 years</em>.">Prodotti chimici che il mercato sceglie da <em>60 anni</em>.</h1>
+        <p class="lead" data-it="Additivi, anticongelanti, lavavetro e prodotti tecnici per l'auto e la ferramenta. Sviluppati e prodotti a Rosate (Milano), distribuiti in 18 paesi nel mondo." data-en="Additives, antifreeze, washer fluids and technical products for automotive and hardware. Developed and produced in Rosate (Milan), distributed to 18 countries worldwide.">Additivi, anticongelanti, lavavetro e prodotti tecnici per l'auto e la ferramenta. Sviluppati e prodotti a Rosate (Milano), distribuiti in 18 paesi nel mondo.</p>
+        <div class="cta-row">
+          <a href="#shop" class="btn btn-primary" data-it="Esplora i prodotti" data-en="Explore products">Esplora i prodotti</a>
+          <a href="#contact" class="btn btn-ghost" data-it="Diventa distributore" data-en="Become a distributor">Diventa distributore</a>
+        </div>
+      </div>
+      <div class="gauge">
+        <svg class="bottle" viewBox="0 0 160 230" fill="none">
+          <defs>
+            <linearGradient id="fluid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A45"/><stop offset="1" stop-color="#E8430A"/></linearGradient>
+            <clipPath id="bot"><path d="M52 54h56v8c14 6 22 18 22 40v92c0 14-10 24-24 24H54c-14 0-24-10-24-24v-92c0-22 8-34 22-40z"/></clipPath>
+          </defs>
+          <rect x="62" y="14" width="36" height="30" rx="6" fill="#2b333e" stroke="#3a434f"/>
+          <rect x="58" y="40" width="44" height="16" rx="4" fill="#222a33" stroke="#3a434f"/>
+          <path d="M52 54h56v8c14 6 22 18 22 40v92c0 14-10 24-24 24H54c-14 0-24-10-24-24v-92c0-22 8-34 22-40z" fill="#1b212a" stroke="#39434f" stroke-width="2"/>
+          <g clip-path="url(#bot)"><rect x="20" y="120" width="120" height="160" fill="url(#fluid)"/><path id="wave" d="M20 122 q15 -8 30 0 t30 0 t30 0 t30 0 v60 h-150z" fill="#FF7A45" opacity=".9"/></g>
+          <rect x="42" y="120" width="76" height="48" rx="5" fill="rgba(255,255,255,.92)"/>
+          <text x="80" y="140" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#14181E">SACIR EST</text>
+          <text x="80" y="156" text-anchor="middle" font-family="monospace" font-size="8" fill="#5A6571">ADDITIVO · 250ml</text>
+        </svg>
+        <div class="spec s1">REF <b>001</b></div>
+        <div class="spec s2">-40<b>°C</b></div>
+        <div class="spec s3">MADE IN <b>ITALY</b></div>
+      </div>
+    </div>
+    <div class="stats">
+      <div><div class="num">1964</div><div class="lab" data-it="Fondazione" data-en="Founded">Fondazione</div></div>
+      <div><div class="num">18</div><div class="lab" data-it="Paesi serviti" data-en="Countries">Paesi serviti</div></div>
+      <div><div class="num">60+</div><div class="lab" data-it="Anni esperienza" data-en="Years experience">Anni esperienza</div></div>
+      <div><div class="num">IT</div><div class="lab" data-it="Produzione interna" data-en="In-house production">Produzione interna</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sectors">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">02 / GAMMA</span>
+      <h2 data-it="Due settori, una sola garanzia di qualità" data-en="Two sectors, one quality guarantee">Due settori, una sola garanzia di qualità</h2>
+      <p data-it="Materie prime selezionate, tecnologie avanzate e controllo qualità in ogni fase della produzione." data-en="Selected raw materials, advanced technology and quality control at every production stage.">Materie prime selezionate, tecnologie avanzate e controllo qualità in ogni fase della produzione.</p>
+    </div>
+    <div class="sectors">
+      <div class="sector auto reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 13l2-5a3 3 0 013-2h8a3 3 0 013 2l2 5"/><rect x="2" y="13" width="20" height="6" rx="2"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></div>
+        <h3 data-it="Settore Auto" data-en="Automotive">Settore Auto</h3>
+        <p style="color:var(--muted);font-size:.94rem" data-it="Linea completa per cura e manutenzione del veicolo, professionale e fai-da-te." data-en="A complete line for vehicle care and maintenance, professional and DIY.">Linea completa per cura e manutenzione del veicolo, professionale e fai-da-te.</p>
+        <div class="chips"><span class="chip">Additivi</span><span class="chip">Anticongelanti</span><span class="chip">Lavavetro</span><span class="chip">Fluidi freno</span><span class="chip">Aerosol</span></div>
+        <button class="more" data-goto="auto"><span data-it="Scopri i prodotti auto" data-en="Discover automotive">Scopri i prodotti auto</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="sector diy reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 7l3-3 3 3-3 3"/><path d="M14 7 5 16a2 2 0 103 3l9-9"/><path d="M3 21l2-2"/></svg></div>
+        <h3 data-it="Fai da Te &amp; Ferramenta" data-en="DIY &amp; Hardware">Fai da Te &amp; Ferramenta</h3>
+        <p style="color:var(--muted);font-size:.94rem" data-it="Soluzioni tecniche per officina, casa e industria leggera." data-en="Technical solutions for workshop, home and light industry.">Soluzioni tecniche per officina, casa e industria leggera.</p>
+        <div class="chips"><span class="chip">Spray tecnici</span><span class="chip">Sigillanti</span><span class="chip">Adesivi rapidi</span><span class="chip">Lubrificanti</span></div>
+        <button class="more" data-goto="diy"><span data-it="Scopri i prodotti fai da te" data-en="Discover DIY">Scopri i prodotti fai da te</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block shop" id="shop">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">03 / E-COMMERCE</span>
+      <h2 data-it="Ordina online, come i tuoi clienti vogliono" data-en="Order online, the way your customers expect">Ordina online, come i tuoi clienti vogliono</h2>
+      <p data-it="Demo del catalogo ordinabile: filtra, aggiungi al carrello e vai al checkout. Pronto per pagamenti e area distributori." data-en="Demo of a shoppable catalogue: filter, add to cart and checkout. Ready for payments and a distributor area.">Demo del catalogo ordinabile: filtra, aggiungi al carrello e vai al checkout. Pronto per pagamenti e area distributori.</p>
+    </div>
+    <div class="filters" id="filters">
+      <button data-filter="all" class="on" data-it="Tutti" data-en="All">Tutti</button>
+      <button data-filter="auto" data-it="Settore Auto" data-en="Automotive">Settore Auto</button>
+      <button data-filter="diy" data-it="Fai da Te" data-en="DIY">Fai da Te</button>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section class="block proposal" id="proposal">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="ribbon"><i></i><span data-it="DEMO · PROPOSTA DI TRASFORMAZIONE DIGITALE" data-en="DEMO · DIGITAL TRANSFORMATION PROPOSAL">DEMO · PROPOSTA DI TRASFORMAZIONE DIGITALE</span></span>
+      <h2 data-it="Tutto ciò che serve per portare SACIR EST online" data-en="Everything needed to bring SACIR EST online">Tutto ciò che serve per portare SACIR EST online</h2>
+      <p data-it="Questa pagina è una dimostrazione. Ecco i servizi inclusi nella proposta." data-en="This page is a demonstration. Here are the services included in the proposal.">Questa pagina è una dimostrazione. Ecco i servizi inclusi nella proposta.</p>
+    </div>
+    <div class="svc">
+      <div class="card reveal"><div class="n">01</div><div class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></div><h4 data-it="Sito web moderno" data-en="Modern website">Sito web moderno</h4><p data-it="Veloce, responsive e multilingua. Sostituisce il vecchio Joomla con una base manutenibile." data-en="Fast, responsive and multilingual. Replaces the old Joomla with a maintainable base.">Veloce, responsive e multilingua. Sostituisce il vecchio Joomla con una base manutenibile.</p></div>
+      <div class="card reveal"><div class="n">02</div><div class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h4>SEO</h4><p data-it="Visibilità su Google per ricerche come «additivi auto» o «antigelo concentrato»." data-en="Google visibility for searches like “car additives” or “concentrated antifreeze”.">Visibilità su Google per ricerche come «additivi auto» o «antigelo concentrato».</p></div>
+      <div class="card reveal"><div class="n">03</div><div class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h4 data-it="Sicurezza" data-en="Security">Sicurezza</h4><p data-it="HTTPS, backup automatici, protezione dei dati e dei moduli di contatto." data-en="HTTPS, automatic backups, data and contact-form protection.">HTTPS, backup automatici, protezione dei dati e dei moduli di contatto.</p></div>
+      <div class="card reveal"><div class="n">04</div><div class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M6 6 5 3H2"/></svg></div><h4>E-commerce</h4><p data-it="Catalogo ordinabile, carrello, pagamenti e listini riservati ai distributori." data-en="Shoppable catalogue, cart, payments and reserved distributor pricing.">Catalogo ordinabile, carrello, pagamenti e listini riservati ai distributori.</p></div>
+      <div class="card reveal"><div class="n">05</div><div class="ic2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg></div><h4 data-it="Social / SMM" data-en="Social / SMM">Social / SMM</h4><p data-it="Presenza su Instagram e LinkedIn con contenuti tecnici e campagne mirate." data-en="Instagram and LinkedIn presence with technical content and targeted campaigns.">Presenza su Instagram e LinkedIn con contenuti tecnici e campagne mirate.</p></div>
+    </div>
+    <div class="brands reveal"><span>HOLTS</span><span>PRESTONE</span><span>VELOX&nbsp;GLASS</span><span>SACIR&nbsp;EST</span></div>
+  </div>
+</section>
+
+<section class="block contact" id="contact">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow">04 / CONTATTI</span><h2 data-it="Parliamo del tuo prossimo ordine" data-en="Let's talk about your next order">Parliamo del tuo prossimo ordine</h2></div>
+    <div class="cgrid">
+      <div class="reveal">
+        <div class="info-item"><div class="ic3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><div><div class="k" data-it="Sede" data-en="Address">Sede</div><div class="v">via Malpaga, 9 — 20088 Rosate (MI), Italy</div></div></div>
+        <div class="info-item"><div class="ic3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-3 2a12 12 0 005 5l2-3 5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></div><div><div class="k" data-it="Telefono" data-en="Phone">Telefono</div><div class="v">+39 02 908.48.291</div></div></div>
+        <div class="info-item"><div class="ic3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><div><div class="k">Email</div><div class="v">info@sacirest.com</div></div></div>
+        <div class="info-item"><div class="ic3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div><div><div class="k">P.IVA</div><div class="v">11557210157</div></div></div>
+      </div>
+      <div class="reveal">
+        <form id="contactForm">
+          <input type="text" placeholder="Nome" data-it-ph="Nome" data-en-ph="Name" required>
+          <input type="email" placeholder="Email" required>
+          <textarea placeholder="Messaggio" data-it-ph="Messaggio" data-en-ph="Message" required></textarea>
+          <button type="submit" class="btn btn-primary" data-it="Invia richiesta" data-en="Send request">Invia richiesta</button>
+          <div class="form-ok" id="formOk" data-it="✓ Richiesta inviata. Ti ricontattiamo presto." data-en="✓ Request sent. We'll get back to you soon.">✓ Richiesta inviata. Ti ricontattiamo presto.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div><strong style="color:#fff;font-family:var(--display)">SACIR EST s.r.l.</strong> — <span data-it="Chimica per l'automotive dal 1964" data-en="Automotive chemicals since 1964">Chimica per l'automotive dal 1964</span></div>
+    <div class="cr" data-it="DEMO NON UFFICIALE · FOTO DIMOSTRATIVE (WIKIMEDIA COMMONS, CC) DA SOSTITUIRE" data-en="UNOFFICIAL DEMO · SAMPLE PHOTOS (WIKIMEDIA COMMONS, CC) TO BE REPLACED">DEMO NON UFFICIALE · FOTO DIMOSTRATIVE (WIKIMEDIA COMMONS, CC) DA SOSTITUIRE</div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Carrello">
+  <div class="dh"><h3 data-it="Carrello" data-en="Cart">Carrello</h3><button class="close" id="closeCart">&times;</button></div>
+  <div class="ditems" id="ditems"></div>
+  <div class="dfoot">
+    <div class="total"><span data-it="Totale" data-en="Total">Totale</span><span id="total">€0,00</span></div>
+    <button class="btn btn-primary" data-it="Vai al checkout" data-en="Go to checkout">Vai al checkout</button>
+    <div class="note" data-it="DEMO · PAGAMENTO NON ATTIVO" data-en="DEMO · PAYMENT NOT ACTIVE">DEMO · PAGAMENTO NON ATTIVO</div>
+  </div>
+</aside>
+
+<script>
+const C='https://commons.wikimedia.org/wiki/Special:FilePath/';
+const SVGB=(c1,c2)=>`<svg viewBox="0 0 80 110"><defs><linearGradient id="g${c1.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect x="32" y="6" width="16" height="14" rx="3" fill="#2b333e"/><path d="M26 24h28v6c7 3 11 9 11 20v32c0 7-5 12-12 12H27c-7 0-12-5-12-12V50c0-11 4-17 11-20z" fill="url(#g${c1.slice(1)})"/><rect x="22" y="52" width="36" height="26" rx="3" fill="rgba(255,255,255,.92)"/><rect x="27" y="58" width="26" height="3" rx="1.5" fill="#14181E"/><rect x="27" y="64" width="20" height="2.5" rx="1.25" fill="#5A6571"/></svg>`;
+
+const products=[
+ {id:1,sector:'auto',it:"Additivo Diesel Pulitore",en:"Diesel Cleaner Additive",dsit:"Pulizia iniettori e sistema di alimentazione.",dsen:"Cleans injectors and the fuel system.",tag:"Additivi",teal:false,price:8.90,img:C+"Motor%20oil.JPG?width=500",fb:SVGB("#FF7A45","#E8430A")},
+ {id:2,sector:'auto',it:"Antigelo Concentrato -40°C",en:"Concentrated Antifreeze -40°C",dsit:"Protezione radiatore in ogni stagione.",dsen:"Year-round radiator protection.",tag:"Anticongelanti",teal:true,price:12.50,img:C+"Antifreeze%20in%20the%20radiator.jpg?width=500",fb:SVGB("#21C3CC","#0F8E94")},
+ {id:3,sector:'auto',it:"Lavavetro Pronto all'Uso",en:"Ready-to-use Washer Fluid",dsit:"Pulizia rapida del parabrezza.",dsen:"Fast windshield cleaning.",tag:"Lavavetro",teal:true,price:4.90,img:C+"1140%20Wien%2C%20Scheibenfrostschutz%202023-03-23.jpg?width=500",fb:SVGB("#3FA9F5","#1B6FB0")},
+ {id:4,sector:'auto',it:"Liquido Freni DOT 4",en:"Brake Fluid DOT 4",dsit:"Alte prestazioni per impianto frenante.",dsen:"High performance for the braking system.",tag:"Fluidi freno",teal:false,price:9.90,img:C+"Castrol%20brake%20and%20clutch%20fluid.jpg?width=500",fb:SVGB("#FFB020","#E8430A")},
+ {id:5,sector:'diy',it:"Spray Multifunzione",en:"Multipurpose Spray",dsit:"Lubrifica, sblocca e protegge i metalli.",dsen:"Lubricates, unblocks and protects metals.",tag:"Spray tecnici",teal:false,price:6.50,img:C+"WD-40%20Smart%20Straw.JPG?width=500",fb:SVGB("#FF7A45","#C9370A")},
+ {id:6,sector:'diy',it:"Sigillante Rapido",en:"Fast Sealant",dsit:"Tenuta immediata per officina e casa.",dsen:"Instant seal for workshop and home.",tag:"Sigillanti",teal:true,price:7.90,img:C+"Kartuschenpistole.jpg?width=500",fb:SVGB("#5BD0A0","#0F8E94")},
+];
+
+let lang='it', cart={}, filter='all';
+const eur=n=>"€"+n.toFixed(2).replace('.',',');
+const fbMap={};products.forEach(p=>fbMap[p.id]=p.fb);
+function imgFail(id,el){el.closest('.vis').innerHTML=fbMap[id];}
+
+function renderProducts(){
+  const list=products.filter(p=>filter==='all'||p.sector===filter);
+  document.getElementById('productGrid').innerHTML=list.map(p=>`
+  <div class="prod reveal">
+    <div class="vis"><img src="${p.img}" alt="${p[lang]}" loading="lazy" onerror="imgFail(${p.id},this)"></div>
+    <span class="ptag ${p.teal?'teal':''}">${p.tag}</span>
+    <h4>${p[lang]}</h4>
+    <p class="ds">${p['ds'+lang]}</p>
+    <div class="row"><span class="price">${eur(p.price)}</span><button class="add" data-add="${p.id}">${lang==='it'?'Aggiungi':'Add'}</button></div>
+  </div>`).join('');
+  bindReveal();
+}
+function setFilter(f){filter=f;document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.filter===f));renderProducts();}
+
+function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart();flash(id);openDrawer();}
+function flash(id){const b=document.querySelector(`[data-add="${id}"]`);if(!b)return;b.classList.add('done');b.textContent=lang==='it'?'Aggiunto ✓':'Added ✓';setTimeout(()=>{b.classList.remove('done');b.textContent=lang==='it'?'Aggiungi':'Add';},900);}
+function updateCart(){
+  const ids=Object.keys(cart);let count=0,total=0;
+  ids.forEach(id=>{count+=cart[id];total+=cart[id]*products.find(p=>p.id==id).price;});
+  const cc=document.getElementById('cartCount');cc.textContent=count;cc.classList.toggle('show',count>0);
+  document.getElementById('total').textContent=eur(total);
+  const box=document.getElementById('ditems');
+  if(!ids.length){box.innerHTML=`<div class="empty">${lang==='it'?'Il carrello è vuoto.':'Your cart is empty.'}</div>`;return;}
+  box.innerHTML=ids.map(id=>{const p=products.find(x=>x.id==id);return`
+    <div class="ditem"><div><div class="nm">${p[lang]}</div><div class="pr">${eur(p.price)}</div></div>
+    <div class="qty"><button data-dec="${id}">−</button><span>${cart[id]}</span><button data-inc="${id}">+</button></div></div>`;}).join('');
+}
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+function openDrawer(){drawer.classList.add('open');scrim.classList.add('open');}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');}
+
+function setLang(l){
+  lang=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-it]').forEach(el=>{el.innerHTML=el.getAttribute('data-'+l);});
+  document.querySelectorAll('[data-it-ph]').forEach(el=>{el.setAttribute('placeholder',el.getAttribute('data-'+l+'-ph'));});
+  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  renderProducts();updateCart();
+}
+
+function bindReveal(){
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+  document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+}
+function goTo(sel){const t=document.querySelector(sel);if(t)t.scrollIntoView({behavior:'smooth'});}
+
+let t=0;
+function wave(){t+=0.05;const w=document.getElementById('wave');if(w){const y=122+Math.sin(t)*2;w.setAttribute('d',`M20 ${y} q15 -7 30 0 t30 0 t30 0 t30 0 v70 h-150z`);}requestAnimationFrame(wave);}
+
+const menu=document.getElementById('menu');
+/* keep ALL navigation inside this file: intercept every in-page link */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const id=a.getAttribute('href');e.preventDefault();
+  if(id==='#top'){window.scrollTo({top:0,behavior:'smooth'});}else{goTo(id);}
+  menu.classList.remove('open');
+}));
+document.addEventListener('click',e=>{
+  const add=e.target.closest('[data-add]');if(add)addToCart(+add.dataset.add);
+  const inc=e.target.closest('[data-inc]');if(inc){cart[inc.dataset.inc]++;updateCart();}
+  const dec=e.target.closest('[data-dec]');if(dec){const id=dec.dataset.dec;cart[id]--;if(cart[id]<=0)delete cart[id];updateCart();}
+  const f=e.target.closest('#filters button');if(f)setFilter(f.dataset.filter);
+  const m=e.target.closest('[data-goto]');if(m){setFilter(m.dataset.goto);goTo('#shop');}
+});
+document.getElementById('lang').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setLang(b.dataset.l);});
+document.getElementById('openCart').onclick=openDrawer;
+document.getElementById('closeCart').onclick=closeDrawer;
+scrim.onclick=closeDrawer;
+document.getElementById('burger').onclick=()=>menu.classList.toggle('open');
+document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('formOk').classList.add('show');e.target.reset();});
+
+renderProducts();updateCart();bindReveal();wave();
+</script>
+</body>
+</html>
