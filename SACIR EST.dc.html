@@ -696,7 +696,7 @@ class Component extends DCLogic {
     catch(e){ this.setState({cookieHidden:false}); }
   }
 
-  go(view){ this.setState({view, menuOpen:false, openCat: view==='products'? this.state.openCat : null}); try{window.scrollTo({top:0,behavior:'auto'});}catch(e){} }
+  go(view){ const openCat=view==='products'?(this.state.openCat||this.CATS[0].key):null; this.setState({view, menuOpen:false, openCat}); try{window.scrollTo({top:0,behavior:'auto'});}catch(e){} }
   openCategory(key){
     this.setState({view:'products', openCat:key, menuOpen:false});
     try{
